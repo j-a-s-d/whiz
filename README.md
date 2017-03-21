@@ -3,7 +3,7 @@ A micro framework based on Ace.
 
 ## History
 
-* 1.0.0 -- 21 Mar 2017
+* 0.0.1 -- 21 Mar 2017
     + released first public binary
     + added whiz.WhizObject class
     + added whiz.Whiz class
