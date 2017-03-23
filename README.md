@@ -26,6 +26,7 @@ Just another Java micro framework.
     + added documentation comments
     + configured to depend on Gson Ace 1.0.1
     + configured to depend on Gson 2.3.1
+    + configured to depend on Ace 0.4.2
 * 0.0.2 -- 22 Mar 2017
     + released new binary
     + added whiz.net.interfaces.HttpCookieHandler interface
