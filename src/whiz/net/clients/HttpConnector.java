@@ -22,10 +22,19 @@ public class HttpConnector extends WhizObject implements HttpCookieHandler {
 	protected Integer _readTimeout;
 
 	public HttpConnector() {
-		this(STRINGS.EMPTY);
+		this(HttpConnector.class, STRINGS.EMPTY);
+	}
+
+	public HttpConnector(final Class<?> clazz) {
+		this(clazz, STRINGS.EMPTY);
 	}
 
 	public HttpConnector(final String baseUrl) {
+		this(HttpConnector.class, baseUrl);
+	}
+
+	public HttpConnector(final Class<?> clazz, final String baseUrl) {
+		super(clazz);
 		final int l = baseUrl.length();
 		if (l == 0) {
 			_base = null;

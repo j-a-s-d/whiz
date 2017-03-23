@@ -23,7 +23,8 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 	private final Treater<byte[]> _writingAdapter;
 	private final Treater<byte[]> _readingAdapter;
 
-	public HttpRequestHandler(final HttpMethod[] methods, final String route, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
+	public HttpRequestHandler(final Class<?> clazz, final HttpMethod[] methods, final String route, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
+		super(clazz);
 		_route = route;
 		_methods = methods;
 		_methodNames = new HashSet();

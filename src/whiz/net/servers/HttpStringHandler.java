@@ -9,12 +9,12 @@ public abstract class HttpStringHandler extends HttpRequestHandler {
 
 	private String _charset;
 
-	public HttpStringHandler(final HttpMethod[] methods, final String route) {
-		this(methods, route, null, null);
+	public HttpStringHandler(final Class<?> clazz, final HttpMethod[] methods, final String route) {
+		this(clazz, methods, route, null, null);
 	}
 
-	public HttpStringHandler(final HttpMethod[] methods, final String route, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
-		super(methods, route, readingAdapter, writingAdapter);
+	public HttpStringHandler(final Class<?> clazz, final HttpMethod[] methods, final String route, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
+		super(clazz, methods, route, readingAdapter, writingAdapter);
 		_charset = "UTF-8";
 	}
 

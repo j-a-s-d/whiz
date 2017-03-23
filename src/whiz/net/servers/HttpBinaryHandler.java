@@ -7,12 +7,12 @@ import whiz.net.HttpMethod;
 
 public abstract class HttpBinaryHandler extends HttpRequestHandler {
 
-	public HttpBinaryHandler(final HttpMethod[] methods, final String route) {
-		this(methods, route, null, null);
+	public HttpBinaryHandler(final Class<?> clazz, final HttpMethod[] methods, final String route) {
+		this(clazz, methods, route, null, null);
 	}
 
-	public HttpBinaryHandler(final HttpMethod[] methods, final String route, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
-		super(methods, route, readingAdapter, writingAdapter);
+	public HttpBinaryHandler(final Class<?> clazz, final HttpMethod[] methods, final String route, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
+		super(clazz, methods, route, readingAdapter, writingAdapter);
 	}
 
 	@Override protected byte[] process(final HttpRequest request, final byte[] requestBody) throws Throwable {

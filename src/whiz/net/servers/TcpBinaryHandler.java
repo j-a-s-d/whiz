@@ -8,11 +8,19 @@ import java.net.Socket;
 public abstract class TcpBinaryHandler extends TcpAbstractHandler {
 
 	public TcpBinaryHandler(final Socket socket) {
-		this(socket, null, null);
+		this(TcpBinaryHandler.class, socket, null, null);
+	}
+
+	public TcpBinaryHandler(final Class<?> clazz, final Socket socket) {
+		this(clazz, socket, null, null);
 	}
 
 	public TcpBinaryHandler(final Socket socket, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
-		super(socket, readingAdapter, writingAdapter);
+		this(TcpBinaryHandler.class, socket, readingAdapter, writingAdapter);
+	}
+
+	public TcpBinaryHandler(final Class<?> clazz, final Socket socket, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
+		super(clazz, socket, readingAdapter, writingAdapter);
 	}
 
 	public final byte[] read() {

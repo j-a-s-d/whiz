@@ -35,6 +35,7 @@ public class HttpRequest extends WhizObject implements HttpCookieHandler {
 	private boolean _replied;
 	
 	public HttpRequest(final HttpStand stand, final HttpExchange client) {
+		super(HttpRequest.class);
 		_replied = false;
 		_stand = stand;
 		_client = client;

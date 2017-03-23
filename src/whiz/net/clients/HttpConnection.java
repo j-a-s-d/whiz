@@ -46,6 +46,11 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 	protected CookieManager _cookieManager;
 
 	protected HttpConnection(final String url, final HttpMethod method, final String data) {
+		this(HttpConnection.class, url, method, data);
+	}
+
+	protected HttpConnection(final Class<?> clazz, final String url, final HttpMethod method, final String data) {
+		super(clazz);
 		_requestURL = url;
 		_requestMethod = method;
 		_requestData = data;

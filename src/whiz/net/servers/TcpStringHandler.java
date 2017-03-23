@@ -10,11 +10,19 @@ public abstract class TcpStringHandler extends TcpAbstractHandler {
 	private String _charset;
 
 	public TcpStringHandler(final Socket socket) {
-		this(socket, null, null);
+		this(TcpStringHandler.class, socket, null, null);
+	}
+
+	public TcpStringHandler(final Class<?> clazz, final Socket socket) {
+		this(clazz, socket, null, null);
 	}
 
 	public TcpStringHandler(final Socket socket, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
-		super(socket, readingAdapter, writingAdapter);
+		this(TcpStringHandler.class, socket, readingAdapter, writingAdapter);
+	}
+
+	public TcpStringHandler(final Class<?> clazz, final Socket socket, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
+		super(clazz, socket, readingAdapter, writingAdapter);
 		_charset = "UTF-8";
 	}
 

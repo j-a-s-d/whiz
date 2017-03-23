@@ -6,4 +6,8 @@ import whiz.WhizObject;
 
 public abstract class NetworkConnection extends WhizObject {
 
+	public NetworkConnection(final Class<?> clazz) {
+		super(clazz);
+	}
+
 }

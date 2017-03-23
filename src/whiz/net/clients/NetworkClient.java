@@ -6,4 +6,8 @@ import whiz.net.NetworkConnection;
 
 abstract class NetworkClient extends NetworkConnection {
 
+	public NetworkClient(final Class<?> clazz) {
+		super(clazz);
+	}
+
 }

@@ -4,6 +4,10 @@ package whiz.net.clients;
 
 public abstract class HttpGetBomber extends HttpBomber {
 
+	public HttpGetBomber() {
+		super(HttpGetBomber.class);
+	}
+
 	@Override protected HttpConnection getConnector(final String... values) throws Exception {
 		return new HttpGetter(values[0]);
 	}

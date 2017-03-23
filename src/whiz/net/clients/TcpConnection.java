@@ -22,6 +22,7 @@ public class TcpConnection extends NetworkClient {
 	protected OutputStreamWriter _writer;
 
 	public TcpConnection(final String host, final int port) {
+		super(TcpConnection.class);
 		_host = host;
 		_port = port;
 	}

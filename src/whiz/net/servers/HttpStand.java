@@ -14,6 +14,10 @@ public abstract class HttpStand extends NetworkServer {
 	private HttpServer _httpServer;
 	private boolean _allowCrossOrigin;
 
+	public HttpStand(final Class<?> clazz) {
+		super(clazz);
+	}
+
 	@Override protected final boolean initialize(final InetSocketAddress address) {
 		_httpServer = null;
 		setAddress(address);

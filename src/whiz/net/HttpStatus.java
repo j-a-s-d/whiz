@@ -4,6 +4,9 @@ package whiz.net;
 
 import whiz.Whiz;
 
+/**
+ * Utility class for working with HTTP statuses.
+ */
 public class HttpStatus extends Whiz {
 
 	public static final int CONTINUE = 100; // Continue

@@ -13,6 +13,10 @@ public abstract class HttpBomber extends WhizObject implements Stoppable {
 	protected int _count = 100;
 	protected boolean _active = true;
 
+	public HttpBomber(final Class<?> clazz) {
+		super(clazz);
+	}
+
 	public PrintStream getPrintStream() {
 		return _out;
 	}

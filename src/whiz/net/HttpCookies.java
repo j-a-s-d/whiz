@@ -7,6 +7,9 @@ import java.net.HttpCookie;
 import java.util.List;
 import whiz.Whiz;
 
+/**
+ * Utility class for working with HTTP cookies.
+ */
 public class HttpCookies extends Whiz {
 
 	public static final String COOKIE_OLD_REQUEST_HEADER = "Cookie";

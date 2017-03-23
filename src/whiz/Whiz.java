@@ -15,7 +15,7 @@ public class Whiz extends Ace {
 	/**
 	 * Whiz version.
 	 */
-	public static final SemanticVersion WHIZ_VERSION = SemanticVersion.fromString("0.0.1");
+	public static final SemanticVersion WHIZ_VERSION = SemanticVersion.fromString("0.0.3");
 
 	// RTTI
 	private static final int CURRENT_STACK_TRACE_INDEX = 4;

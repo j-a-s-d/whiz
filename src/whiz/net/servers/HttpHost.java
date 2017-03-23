@@ -11,53 +11,94 @@ public class HttpHost extends HttpStand {
 	public static int DEFAULT_THREADS = Threads.DEFAULT;
 
 	public HttpHost() {
-		this(new InetSocketAddress(DEFAULT_PORT), DEFAULT_THREADS, DEFAULT_AUTOSTART);
+		this(HttpHost.class);
+	}
+
+	public HttpHost(final Class<?> clazz) {
+		this(clazz, new InetSocketAddress(DEFAULT_PORT), DEFAULT_THREADS, DEFAULT_AUTOSTART);
 	}
 
 	public HttpHost(final boolean autostart) {
-		this(new InetSocketAddress(DEFAULT_PORT), DEFAULT_THREADS, autostart);
+		this(HttpHost.class, autostart);
+	}
+
+	public HttpHost(final Class<?> clazz, final boolean autostart) {
+		this(clazz, new InetSocketAddress(DEFAULT_PORT), DEFAULT_THREADS, autostart);
 	}
 
 	public HttpHost(final int port) {
-		this(new InetSocketAddress(port), DEFAULT_THREADS, DEFAULT_AUTOSTART);
+		this(HttpHost.class, port);
+	}
+
+	public HttpHost(final Class<?> clazz, final int port) {
+		this(clazz, new InetSocketAddress(port), DEFAULT_THREADS, DEFAULT_AUTOSTART);
 	}
 
 	public HttpHost(final int port, final int threads) {
-		this(new InetSocketAddress(port), threads, DEFAULT_AUTOSTART);
+		this(HttpHost.class, port, threads);
+	}
+
+	public HttpHost(final Class<?> clazz, final int port, final int threads) {
+		this(clazz, new InetSocketAddress(port), threads, DEFAULT_AUTOSTART);
 	}
 
 	public HttpHost(final int port, final boolean autostart) {
-		this(new InetSocketAddress(port), DEFAULT_THREADS, autostart);
+		this(HttpHost.class, port, autostart);
+	}
+
+	public HttpHost(final Class<?> clazz, final int port, final boolean autostart) {
+		this(clazz, new InetSocketAddress(port), DEFAULT_THREADS, autostart);
 	}
 
 	public HttpHost(final int port, final int threads, final boolean autostart) {
-		this(new InetSocketAddress(port), threads, autostart);
+		this(HttpHost.class, port, threads, autostart);
+	}
+
+	public HttpHost(final Class<?> clazz, final int port, final int threads, final boolean autostart) {
+		this(clazz, new InetSocketAddress(port), threads, autostart);
 	}
 
 	public HttpHost(final InetSocketAddress address) {
-		this(address, DEFAULT_THREADS, DEFAULT_AUTOSTART);
+		this(HttpHost.class, address);
+	}
+
+	public HttpHost(final Class<?> clazz, final InetSocketAddress address) {
+		this(clazz, address, DEFAULT_THREADS, DEFAULT_AUTOSTART);
 	}
 
 	public HttpHost(final InetSocketAddress address, final int threads) {
-		this(address, threads, DEFAULT_AUTOSTART);
+		this(HttpHost.class, address, threads);
+	}
+
+	public HttpHost(final Class<?> clazz, final InetSocketAddress address, final int threads) {
+		this(clazz, address, threads, DEFAULT_AUTOSTART);
 	}
 
 	public HttpHost(final InetSocketAddress address, final boolean autostart) {
-		this(address, DEFAULT_THREADS, autostart);
+		this(HttpHost.class, address, autostart);
+	}
+
+	public HttpHost(final Class<?> clazz, final InetSocketAddress address, final boolean autostart) {
+		this(clazz, address, DEFAULT_THREADS, autostart);
 	}
 
 	public HttpHost(final InetSocketAddress address, final int threads, final boolean autostart) {
+		this(HttpHost.class, address, threads, autostart);
+	}
+
+	public HttpHost(final Class<?> clazz, final InetSocketAddress address, final int threads, final boolean autostart) {
+		super(clazz);
 		setExecutionThreadsMaxCount(threads);
 		if (initialize(address) && autostart) {
 			start();
 		}
 	}
 
-	@Override public final HttpHost setName(final String value) {
+	@Override public HttpHost setName(final String value) {
 		return (HttpHost) super.setName(value);
 	}
 
-	@Override public final HttpHost setExecutionThreadsMaxCount(final Integer value) {
+	@Override public HttpHost setExecutionThreadsMaxCount(final Integer value) {
 		return (HttpHost) super.setExecutionThreadsMaxCount(value);
 	}
 
@@ -65,7 +106,7 @@ public class HttpHost extends HttpStand {
 		return getCrossOriginAllowance();
 	}
 
-	public final HttpHost setCrossOriginRequestsAllowance(final boolean value) {
+	public HttpHost setCrossOriginRequestsAllowance(final boolean value) {
 		setCrossOriginAllowance(value);
 		return this;
 	}

@@ -16,7 +16,8 @@ abstract class TcpStand extends NetworkServer implements Runnable {
 	private ServerSocket _tcpServer;
 	private boolean _listening;
 
-	public TcpStand() {
+	public TcpStand(final Class<?> clazz) {
+		super(clazz);
 		setExecutionThreadsMaxCount(DEFAULT_THREADS);
 	}
 

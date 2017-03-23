@@ -12,6 +12,10 @@ import whiz.WhizObject;
 
 public class POP3MessageParser extends WhizObject {
 
+	public POP3MessageParser() {
+		super(POP3MessageParser.class);
+	}
+
 	private void process(final POP3Message message, final List<String> content) {
 		final Map<String, String> headerMap = Maps.make();
 		boolean parsingHeaders = true;

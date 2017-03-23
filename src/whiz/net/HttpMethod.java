@@ -2,6 +2,9 @@
 
 package whiz.net;
 
+/**
+ * HTTP method enum.
+ */
 public enum HttpMethod {
 
 	// NOTE: all are specified in RFC 2616

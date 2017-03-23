@@ -22,6 +22,10 @@ public class URIBuilder extends WhizObject {
 	private String _query;
 	private String _fragment;
 
+	public URIBuilder() {
+		super(URIBuilder.class);
+	}
+
 	public final String getScheme() {
 		return _scheme;
 	}

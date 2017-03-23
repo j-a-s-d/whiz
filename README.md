@@ -9,6 +9,23 @@ Just another Java micro framework.
 
 ## History
 
+* 0.0.3 -- 23 Mar 2017
+    + added whiz.net.servers.RestJsonHandler class
+    + added whiz.net.servers.RestJsonDeleteHandler class
+    + added whiz.net.servers.RestJsonPutHandler class
+    + added whiz.net.servers.RestJsonPostHandler class
+    + added whiz.net.servers.RestJsonGetHandler class
+    + added whiz.net.servers.RestJsonAbstractHandler class
+    + added whiz.net.servers.HttpJsonExchanger interface
+    + added whiz.net.servers.HttpJsonDeleteHandler class
+    + added whiz.net.servers.HttpJsonPutHandler class
+    + added whiz.net.servers.HttpJsonPostHandler class
+    + added whiz.net.servers.HttpJsonGetHandler class
+    + improved whiz.WhizObject class
+    + added whiz.WhizEntity class
+    + added documentation comments
+    + configured to depend on Gson Ace 1.0.1
+    + configured to depend on Gson 2.3.1
 * 0.0.2 -- 22 Mar 2017
     + released new binary
     + added whiz.net.interfaces.HttpCookieHandler interface

@@ -19,11 +19,12 @@ abstract class TcpAbstractHandler extends WhizObject implements Runnable {
 	private final Treater<byte[]> _writingAdapter;
 	private final Treater<byte[]> _readingAdapter;
 
-	public TcpAbstractHandler(final Socket socket) {
-		this(socket, null, null);
+	public TcpAbstractHandler(final Class<?> clazz, final Socket socket) {
+		this(clazz, socket, null, null);
 	}
 
-	public TcpAbstractHandler(final Socket socket, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
+	public TcpAbstractHandler(final Class<?> clazz, final Socket socket, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
+		super(clazz);
 		_socket = setSocket(socket);
 		_readingAdapter = readingAdapter;
 		_writingAdapter = writingAdapter;

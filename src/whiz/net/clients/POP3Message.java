@@ -17,6 +17,10 @@ public class POP3Message extends WhizObject {
 	private Map<String, String> _headers = Maps.make();
 	private List<String> _body = Lists.make();
 
+	public POP3Message() {
+		super(POP3Message.class);
+	}
+
 	public boolean hasErrors() {
 		return _hasErrors;
 	}

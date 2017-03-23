@@ -2,9 +2,7 @@
 
 package whiz.net.servers;
 
-import whiz.WhizObject;
-
-public class MIMEMultipartFormDataPartInfo extends WhizObject {
+public class MIMEMultipartFormDataPartInfo {
 
 	private boolean _isFormData = false;
 	private int _partOffset = -1;

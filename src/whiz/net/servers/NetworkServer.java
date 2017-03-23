@@ -13,6 +13,10 @@ abstract class NetworkServer extends NetworkConnection {
 	private String _name;
 	private Integer _threads;
 
+	public NetworkServer(final Class<?> clazz) {
+		super(clazz);
+	}
+
 	public final String getHost() {
 		return assigned(_address) ? _address.getHostName() : null;
 	}

@@ -41,8 +41,9 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 	protected int _responseCode;
 	protected String _responseData;
 	protected long _responseTime;
-	
+
 	public HttpFormPoster(final String requestURL) {
+		super(HttpFormPoster.class);
 		_userAgent = STRINGS.EMPTY;
 		_boundaryId = _userAgent + "Boundary" + Long.toHexString(System.currentTimeMillis()).toUpperCase();
 		_contentType = "multipart/form-data; boundary=" + _boundaryId;

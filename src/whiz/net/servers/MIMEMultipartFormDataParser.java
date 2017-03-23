@@ -19,6 +19,10 @@ public class MIMEMultipartFormDataParser extends WhizObject {
 	private MIMEMultipartFormDataInfo _info;
 	private byte[] _body;
 
+	public MIMEMultipartFormDataParser() {
+		super(MIMEMultipartFormDataParser.class);
+	}
+
 	private void crackPartHeaders(final MIMEMultipartFormDataPartInfo partInfo, final List<String> headers) {
 		for (final String header : headers) {
 			final String[] parts = header.split(":");
