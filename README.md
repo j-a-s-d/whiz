@@ -9,7 +9,22 @@ Just another Java micro framework.
 
 ## History
 
+* 0.0.4 -- 27 Mar 2017
+    + released new binary
+    + added whiz.platform.unsafe.Unsafe class
+    + added whiz.platform.unsafe.Memory class
+    + added whiz.platform.unsafe.Java class
+    + added whiz.platform.unsafe package
+    + added whiz.platform.compiling.MemoryJavaFileManager class
+    + added whiz.platform.compiling.MemoryFileObject class
+    + added whiz.platform.compiling.ClassCompiler class
+    + added whiz.platform.compiling package
+    + added whiz.platform.JDK class
+    + added whiz.platform.Classes class
+    + added whiz.platform package
+    + configured to depend on Ace 0.4.3
 * 0.0.3 -- 23 Mar 2017
+    + released new binary
     + added whiz.net.servers.RestJsonHandler class
     + added whiz.net.servers.RestJsonDeleteHandler class
     + added whiz.net.servers.RestJsonPutHandler class
