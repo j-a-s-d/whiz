@@ -9,6 +9,14 @@ Just another Java micro framework.
 
 ## History
 
+* 0.0.5 -- 28 Mar 2017
+    + released new binary
+    + improved whiz.net.URIBuilder class
+    + improved whiz.net.servers.HttpHost class
+    + improved whiz.net.servers.HttpRequestHandler class
+    + improved whiz.platform.compiling.ClassCompiler class
+    + removed whiz.platform.compiling.Classes class
+    + configured to depend on Ace 0.4.4
 * 0.0.4 -- 27 Mar 2017
     + released new binary
     + added whiz.platform.unsafe.Unsafe class

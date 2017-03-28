@@ -4,6 +4,8 @@ package whiz.net.servers;
 
 import ace.concurrency.Threads;
 import java.net.InetSocketAddress;
+import java.net.URL;
+import whiz.net.URIBuilder;
 
 public class HttpHost extends HttpStand {
 
@@ -109,6 +111,14 @@ public class HttpHost extends HttpStand {
 	public HttpHost setCrossOriginRequestsAllowance(final boolean value) {
 		setCrossOriginAllowance(value);
 		return this;
+	}
+
+	public URL getBaseURL() {
+		return new URIBuilder()
+			.setScheme("http")
+			.setHost(getHost())
+			.setPort(getPort())
+		.getAsURL();
 	}
 
 	@Override public void onStartListening() {

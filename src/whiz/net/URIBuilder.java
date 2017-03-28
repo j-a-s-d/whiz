@@ -2,8 +2,11 @@
 
 package whiz.net;
 
+import ace.Sandboxed;
 import ace.constants.STRINGS;
 import ace.text.Strings;
+import java.net.URI;
+import java.net.URL;
 import whiz.WhizObject;
 
 /**
@@ -24,6 +27,25 @@ public class URIBuilder extends WhizObject {
 
 	public URIBuilder() {
 		super(URIBuilder.class);
+	}
+
+	public URIBuilder(final URIBuilder other) {
+		super(URIBuilder.class);
+		assign(other);
+	}
+
+	public URIBuilder assign(final URIBuilder other) {
+		if (assigned(other)) {
+			_scheme = other._scheme;
+			_username = other._username;
+			_password = other._password;
+			_host = other._host;
+			_port = other._port;
+			_path = other._path;
+			_query = other._query;
+			_fragment = other._fragment;
+		}
+		return this;
 	}
 
 	public final String getScheme() {
@@ -111,17 +133,34 @@ public class URIBuilder extends WhizObject {
 		if (assigned(_port)) {
 			sb.append(STRINGS.COLON).append(_port);
 		}
-		sb.append(STRINGS.SLASH);
-		if (Strings.hasText(_path)) {
-			sb.append(_path).append(STRINGS.SLASH);
-		}
-		if (Strings.hasText(_query)) {
-			sb.append(STRINGS.QUESTION).append(_query);
-		}
-		if (Strings.hasText(_fragment)) {
-			sb.append(STRINGS.NUMERAL).append(_fragment);
+		final boolean hasPath = Strings.hasText(_path);
+		final boolean hasQuery = Strings.hasText(_query);
+		final boolean hasFragment = Strings.hasText(_fragment);
+		if (hasPath || hasQuery || hasFragment) {
+			sb.append(STRINGS.SLASH);
+			if (hasPath) {
+				sb.append(_path).append(STRINGS.SLASH);
+			}
+			if (hasQuery) {
+				sb.append(STRINGS.QUESTION).append(_query);
+			}
+			if (hasFragment) {
+				sb.append(STRINGS.NUMERAL).append(_fragment);
+			}
 		}
 		return sb.toString();
+	}
+
+	public final URI getAsURI() {
+		return new Sandboxed<URI>() { @Override public URI run() throws Exception {
+			return new URI(getAsString());
+		}}.go();
+	}
+
+	public final URL getAsURL() {
+		return new Sandboxed<URL>() { @Override public URL run() throws Exception {
+			return new URL(getAsString());
+		}}.go();
 	}
 
 }

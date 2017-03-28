@@ -68,8 +68,17 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 		return request;
 	}
 
+	protected void beforeRequestHandling(final HttpRequest request) {
+		// NOTE: override this method in subclasses
+	}
+
+	protected void afterRequestHandling(final HttpRequest request) {
+		// NOTE: override this method in subclasses
+	}
+
 	@Override public void handle(final HttpExchange client) throws IOException {
 		final HttpRequest request = wrapRequest(client);
+		beforeRequestHandling(request);
 		final HttpMethod requestMethod = request.getMethod();
 		if (requestMethod == null) {
 			onWrongMethod(request, client.getRequestMethod());
@@ -119,6 +128,7 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 					break;
 			}
 		}
+		afterRequestHandling(request);
 	}
 
 	protected abstract void onWrongMethod(final HttpRequest request, final String methodName);

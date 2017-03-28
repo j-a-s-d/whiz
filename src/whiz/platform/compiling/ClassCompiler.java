@@ -15,7 +15,6 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.SimpleJavaFileObject;
 import whiz.WhizObject;
-import whiz.platform.Classes;
 import whiz.platform.JDK;
 
 /**
@@ -58,7 +57,7 @@ public class ClassCompiler extends WhizObject {
 		};
 	}
 
-	private URLClassLoader makeByteClassLoader(final URL[] urls, final ClassLoader parent, final Map<String, byte[]> classFilesMap) {
+	private URLClassLoader makeLocalByteClassLoader(final URL[] urls, final ClassLoader parent, final Map<String, byte[]> classFilesMap) {
 		return new URLClassLoader(urls, parent) {
 			@Override protected Class<?> findClass(final String name) throws ClassNotFoundException {
 				if (classFilesMap.containsKey(name)) {
@@ -84,17 +83,18 @@ public class ClassCompiler extends WhizObject {
 			);
 			final StringWriter sw = new StringWriter();
 			if (Boolean.TRUE.equals(compiler.getTask(sw, fm, null, null, null, sources).call())) {
-				final URLClassLoader byteClassLoader = makeByteClassLoader(
+				final URLClassLoader localByteClassLoader = makeLocalByteClassLoader(
 					new URL[0], _classLoader, getClassesMap(fm)
 				);
 				try {
-					result = byteClassLoader.loadClass(canonicalClassName);
+					result = localByteClassLoader.loadClass(canonicalClassName);
+					// NOTE: URLClassLoader.close() does not exists in Java 1.6,
+					// but since it should be called, the call is performed via reflection.
+					URLClassLoader.class.getMethod("close").invoke(localByteClassLoader);
 				} catch (final Exception e) {
 					setLastException(e);
 				}
-				// NOTE: URLClassLoader.close() does not exists in Java 1.6,
-				// but since it should be called, the call is performed via reflection.
-				Classes.invokeMethod(URLClassLoader.class, "close", byteClassLoader);
+				_compilerErrorOutput = null;
 			} else {
 				_compilerErrorOutput = sw.toString();
 			}
@@ -108,6 +108,10 @@ public class ClassCompiler extends WhizObject {
 				put(name, fileManager.getClassFileObjectsMap().get(name).getByteArray());
 			}
 		}};
+	}
+
+	public boolean hasCompilerErrorOutput() {
+		return assigned(_compilerErrorOutput);
 	}
 
 	public String getCompilerErrorOutput() {
