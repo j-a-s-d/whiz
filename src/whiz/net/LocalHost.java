@@ -2,7 +2,9 @@
 
 package whiz.net;
 
+import ace.Sandboxed;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import whiz.Whiz;
 
 /**
@@ -24,6 +26,19 @@ public class LocalHost extends Whiz {
 	public static final String getName() {
 		final InetAddress localHost = getInetAddress();
 		return localHost != null ? localHost.getHostName() : null;
+	}
+
+	public static final Integer findFreePort() {
+		return new Sandboxed<Integer>() {
+			@Override public Integer run() throws Exception {
+				ServerSocket socket;
+				final Integer result = (socket = new ServerSocket(0) {{
+					setReuseAddress(true);
+				}}).getLocalPort();
+				socket.close();
+				return result;
+			}
+		}.go();
 	}
 
 }

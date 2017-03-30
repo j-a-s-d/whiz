@@ -9,6 +9,10 @@ Just another Java micro framework.
 
 ## History
 
+* 0.0.6 -- 30 Mar 2017
+    + released new binary
+    + improved whiz.net.LocalHost class
+    + configured to depend on Ace 0.4.5
 * 0.0.5 -- 28 Mar 2017
     + released new binary
     + improved whiz.net.URIBuilder class
