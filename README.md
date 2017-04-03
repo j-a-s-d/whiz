@@ -9,6 +9,9 @@ Just another Java micro framework.
 
 ## History
 
+* 0.1.0 -- 03 Apr 2017
+    + released new binary
+    + configured to depend on Ace 0.5.0
 * 0.0.6 -- 30 Mar 2017
     + released new binary
     + improved whiz.net.LocalHost class

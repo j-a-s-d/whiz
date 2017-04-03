@@ -3,7 +3,7 @@
 package whiz;
 
 import ace.Ace;
-import ace.app.SemanticVersion;
+import ace.SemanticVersion;
 import ace.concurrency.Threads;
 import ace.constants.STRINGS;
 
@@ -15,7 +15,7 @@ public class Whiz extends Ace {
 	/**
 	 * Whiz version.
 	 */
-	public static final SemanticVersion WHIZ_VERSION = SemanticVersion.fromString("0.0.6");
+	public static final SemanticVersion WHIZ_VERSION = SemanticVersion.fromString("0.1.0");
 
 	// RTTI
 	private static final int CURRENT_STACK_TRACE_INDEX = 4;
