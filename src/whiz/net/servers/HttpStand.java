@@ -5,6 +5,8 @@ package whiz.net.servers;
 import ace.concurrency.Threads;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.HttpsConfigurator;
+import com.sun.net.httpserver.HttpsServer;
 import java.net.InetSocketAddress;
 
 public abstract class HttpStand extends NetworkServer {
@@ -12,22 +14,37 @@ public abstract class HttpStand extends NetworkServer {
 	public static int STOP_DELAY_SECONDS = 5;
 
 	private HttpServer _httpServer;
+	private HttpsConfigurator _httpsConfigurator;
 	private boolean _allowCrossOrigin;
 
-	public HttpStand(final Class<?> clazz) {
+	public HttpStand(final Class<?> clazz, final HttpsConfigurator configurator) {
 		super(clazz);
-	}
-
-	@Override protected final boolean initialize(final InetSocketAddress address) {
-		_httpServer = null;
-		setAddress(address);
+		_allowCrossOrigin = false;
 		try {
-			_httpServer = HttpServer.create();
-			_httpServer.bind(getAddress(), 0);
+			if (assigned(_httpsConfigurator = configurator)) {
+				_httpServer = HttpsServer.create();
+				((HttpsServer) _httpServer).setHttpsConfigurator(_httpsConfigurator);
+			} else {
+				_httpServer = HttpServer.create();
+			}
 		} catch (final Exception e) {
 			setLastException(e);
 		}
-		return assigned(_httpServer);
+	}
+
+	@Override protected final boolean initialize(final InetSocketAddress address) {
+		setAddress(address);
+		try {
+			_httpServer.bind(getAddress(), 0);
+			return true;
+		} catch (final Exception e) {
+			setLastException(e);
+			return false;
+		}
+	}
+
+	public HttpsConfigurator getHttpsConfigurator() {
+		return _httpsConfigurator;
 	}
 
 	protected final boolean getCrossOriginAllowance() {

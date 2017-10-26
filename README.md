@@ -9,6 +9,11 @@ Just another Java micro framework.
 
 ## History
 
+* 0.1.1 -- 26 Oct 2017
+    + released new binary
+    + added whiz.net.SSLContexts class
+    + improved whiz.net.servers.HttpHost class
+    + improved whiz.net.servers.HttpStand class
 * 0.1.0 -- 03 Apr 2017
     + released new binary
     + configured to depend on Ace 0.5.0
