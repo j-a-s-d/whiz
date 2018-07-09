@@ -2,6 +2,7 @@
 
 package whiz.net.servers;
 
+import ace.constants.STRINGS;
 import ace.interfaces.Treater;
 import ace.text.Strings;
 import com.sun.net.httpserver.HttpExchange;
@@ -30,7 +31,7 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 		_methodNames = new HashSet();
 		String tmp = "HEAD,OPTIONS,TRACE";
 		for (final HttpMethod method : methods) {
-			tmp += "," + method.name();
+			tmp += STRINGS.COMMA + method.name();
 			_methodNames.add(method.name());
 		}
 		_allowedMethodsCSV = tmp;
@@ -55,6 +56,10 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 		return this;
 	}
 
+	void unregisterFromStand() {
+		_stand.dropHandler(this);
+	}
+
 	private HttpRequest wrapRequest(final HttpExchange client) {
 		final HttpRequest request = new HttpRequest(_stand, client);
 		request.setResponseHeader("Content-Type", "text/html");
@@ -63,7 +68,7 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 			request.setResponseHeader("Server", _stand.getName());
 		}
 		if (_stand.getCrossOriginAllowance()) {
-			request.setResponseHeader("Access-Control-Allow-Origin", "*");
+			request.setResponseHeader("Access-Control-Allow-Origin", STRINGS.ASTERISK);
 		}
 		return request;
 	}

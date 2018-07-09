@@ -9,6 +9,12 @@ Just another Java micro framework.
 
 ## History
 
+* 0.1.2 -- 09 Jul 2018
+    + released new binary
+    + improved whiz.net.servers.HttpFileGetHandler class
+    + improved whiz.net.servers.HttpRequestHandler class
+    + configured to depend on Gson Ace 1.0.2
+    + configured to depend on Ace 0.5.4
 * 0.1.1 -- 26 Oct 2017
     + released new binary
     + added whiz.net.SSLContexts class

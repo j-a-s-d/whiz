@@ -67,10 +67,10 @@ public abstract class HttpFileGetHandler extends HttpBinaryHandler implements Ht
 			return null;
 		}
 		fileName = onDetermineRealFilename(request, fileName);
-		File file = new File(getFolder() + fileName);
+		File file = new File(getFolder(), fileName);
 		if (file.isDirectory()) {
 			fileName = getDefaultFilename();
-			file = new File(file.getAbsolutePath() + "/" + fileName);
+			file = new File(file, fileName);
 		}
 		if (!file.exists()) {
 			onInexistentFile(request, fileName);
