@@ -19,6 +19,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 import whiz.net.HttpMethod;
 import whiz.net.NetworkConnection;
+import whiz.net.URISchemes;
 import whiz.net.interfaces.HttpConnectionInfo;
 
 public class HttpFormPoster extends NetworkConnection implements HttpConnectionInfo {
@@ -55,9 +56,9 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 	public void open() {
 		try {
 			final URL requestURL = new URL(_requestURL);
-			if ("http".equals(requestURL.getProtocol())) {
+			if (URISchemes.HTTP.equals(requestURL.getProtocol())) {
 				_connection = (HttpURLConnection) requestURL.openConnection();
-			} else if ("https".equals(requestURL.getProtocol())) {
+			} else if (URISchemes.HTTPS.equals(requestURL.getProtocol())) {
 				_connection = (HttpsURLConnection) requestURL.openConnection();
 			} else {
 				throw new Exception("Invalid protocol.");

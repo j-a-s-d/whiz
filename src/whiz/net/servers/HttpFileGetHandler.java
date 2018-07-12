@@ -66,10 +66,16 @@ public abstract class HttpFileGetHandler extends HttpBinaryHandler implements Ht
 			onMissingFilename(request);
 			return null;
 		}
-		fileName = onDetermineRealFilename(request, fileName);
+		if ((fileName = onDetermineRealFilename(request, fileName)) == null) {
+			onInexistentFile(request, null);
+			return null;
+		}
 		File file = new File(getFolder(), fileName);
 		if (file.isDirectory()) {
-			fileName = getDefaultFilename();
+			if ((fileName = getDefaultFilename()) == null) {
+				onInexistentFile(request, null);
+				return null;
+			}
 			file = new File(file, fileName);
 		}
 		if (!file.exists()) {
@@ -81,7 +87,7 @@ public abstract class HttpFileGetHandler extends HttpBinaryHandler implements Ht
 			return null;
 		}
 		final String mimeType = onDetermineContentTypeForFilename(request, fileName);
-		if (assigned(mimeType)) {
+		if (mimeType != null) {
 			request.setResponseHeader("Content-Type", mimeType);
 		}
 		if (!validate(request, fileName)) {

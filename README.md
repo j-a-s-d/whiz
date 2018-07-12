@@ -9,6 +9,15 @@ Just another Java micro framework.
 
 ## History
 
+* 0.1.3 -- 12 Jul 2018
+    + released new binary
+    + improved whiz.net.clients.HttpConnector class
+    + improved whiz.net.clients.HttpConnection class
+    + improved whiz.net.servers.HttpFileGetHandler class
+    + improved whiz.net.servers.HttpHost class
+    + improved whiz.net.servers.HttpStand class
+    + improved whiz.net.URIBuilder class
+    + added whiz.net.URISchemes class
 * 0.1.2 -- 09 Jul 2018
     + released new binary
     + improved whiz.net.servers.HttpFileGetHandler class

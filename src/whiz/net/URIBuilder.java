@@ -16,7 +16,7 @@ public class URIBuilder extends WhizObject {
 
 	// NOTE: conforms the RFCs 2396 and 3986 requirement,
 	// scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]
-	private String _scheme;
+	private String _scheme = URISchemes.HTTP;
 	private String _username;
 	private String _password;
 	private String _host;

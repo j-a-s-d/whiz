@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsServer;
 import java.net.InetSocketAddress;
+import whiz.net.URISchemes;
 
 public abstract class HttpStand extends NetworkServer {
 
@@ -15,6 +16,7 @@ public abstract class HttpStand extends NetworkServer {
 
 	private HttpServer _httpServer;
 	private HttpsConfigurator _httpsConfigurator;
+	private String _uriScheme;
 	private boolean _allowCrossOrigin;
 
 	public HttpStand(final Class<?> clazz, final HttpsConfigurator configurator) {
@@ -24,8 +26,10 @@ public abstract class HttpStand extends NetworkServer {
 			if (assigned(_httpsConfigurator = configurator)) {
 				_httpServer = HttpsServer.create();
 				((HttpsServer) _httpServer).setHttpsConfigurator(_httpsConfigurator);
+				_uriScheme = URISchemes.HTTPS;
 			} else {
 				_httpServer = HttpServer.create();
+				_uriScheme = URISchemes.HTTP;
 			}
 		} catch (final Exception e) {
 			setLastException(e);
@@ -41,6 +45,10 @@ public abstract class HttpStand extends NetworkServer {
 			setLastException(e);
 			return false;
 		}
+	}
+
+	public String getURIScheme() {
+		return _uriScheme;
 	}
 
 	public HttpsConfigurator getHttpsConfigurator() {

@@ -74,40 +74,62 @@ public class HttpConnector extends WhizObject implements HttpCookieHandler {
 		return result;
 	}
 
-	private String getResponseDataAsString(final HttpConnectionInfo hci) {
+	private String fireAndGetResponseDataAsString(final HttpConnection hc) {
+		final HttpConnectionInfo hci = fire(hc);
 		return assigned(hci) && (hci.getResponseCode() == HttpStatus.OK) ? hci.getResponseData() : null;
+	}
+
+	private byte[] fireAndGetResponseDataAsByteArray(final HttpConnection hc) {
+		final HttpConnectionInfo hci = fire(hc);
+		return assigned(hci) && (hci.getResponseCode() == HttpStatus.OK) ? hc.getResponseRawData() : null;
 	}
 
 	public HttpConnectionInfo get(final String urlPath) {
 		return fire(new HttpGetter(formUrl(urlPath)));
 	}
 
+	public byte[] rawGet(final String urlPath) {
+		return fireAndGetResponseDataAsByteArray(new HttpGetter(formUrl(urlPath)));
+	}
+
 	public String stringGet(final String urlPath) {
-		return getResponseDataAsString(fire(new HttpGetter(formUrl(urlPath))));
+		return fireAndGetResponseDataAsString(new HttpGetter(formUrl(urlPath)));
 	}
 
 	public HttpConnectionInfo post(final String urlPath, final String requestData) {
 		return fire(new HttpPoster(formUrl(urlPath), requestData));
 	}
 
+	public byte[] rawPost(final String urlPath, final String requestData) {
+		return fireAndGetResponseDataAsByteArray(new HttpPoster(formUrl(urlPath), requestData));
+	}
+
 	public String stringPost(final String urlPath, final String requestData) {
-		return getResponseDataAsString(fire(new HttpPoster(formUrl(urlPath), requestData)));
+		return fireAndGetResponseDataAsString(new HttpPoster(formUrl(urlPath), requestData));
 	}
 
 	public HttpConnectionInfo put(final String urlPath, final String requestData) {
 		return fire(new HttpPutter(formUrl(urlPath), requestData));
 	}
 
+	public byte[] rawPut(final String urlPath, final String requestData) {
+		return fireAndGetResponseDataAsByteArray(new HttpPutter(formUrl(urlPath), requestData));
+	}
+
 	public String stringPut(final String urlPath, final String requestData) {
-		return getResponseDataAsString(fire(new HttpPutter(formUrl(urlPath), requestData)));
+		return fireAndGetResponseDataAsString(new HttpPutter(formUrl(urlPath), requestData));
 	}
 
 	public HttpConnectionInfo delete(final String urlPath) {
 		return fire(new HttpDeleter(formUrl(urlPath)));
 	}
 
+	public byte[] rawDelete(final String urlPath) {
+		return fireAndGetResponseDataAsByteArray(new HttpDeleter(formUrl(urlPath)));
+	}
+
 	public String stringDelete(final String urlPath) {
-		return getResponseDataAsString(fire(new HttpDeleter(formUrl(urlPath))));
+		return fireAndGetResponseDataAsString(new HttpDeleter(formUrl(urlPath)));
 	}
 
 	public HttpConnectionInfo head(final String urlPath) {

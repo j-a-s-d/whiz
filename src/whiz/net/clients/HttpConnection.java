@@ -41,6 +41,7 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 	protected String _requestURL;
 	protected String _requestData;
 	protected int _responseCode;
+	protected byte[] _responseRawData;
 	protected String _responseData;
 	protected long _responseTime;
 	protected CookieManager _cookieManager;
@@ -174,7 +175,7 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 	}*/
 
 	private String readResponseData() throws IOException {
-		return new String(readResponseDataAsByteArray(), CHARSET);
+		return new String(_responseRawData = readResponseDataAsByteArray(), CHARSET);
 	}
 
 	public final HttpConnectionInfo go() {
@@ -239,6 +240,10 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 		_responseCode = _connection.getResponseCode();
 		_connection.disconnect();
 		_responseTime = _chrono.stop();
+	}
+
+	public byte[] getResponseRawData() {
+		return _responseRawData;
 	}
 
 	// HttpConnectionInfo overrides

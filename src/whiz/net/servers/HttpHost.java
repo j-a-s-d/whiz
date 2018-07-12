@@ -196,7 +196,7 @@ public class HttpHost extends HttpStand {
 
 	public URL getBaseURL() {
 		return new URIBuilder()
-			.setScheme("http")
+			.setScheme(getURIScheme())
 			.setHost(getHost())
 			.setPort(getPort())
 		.getAsURL();
