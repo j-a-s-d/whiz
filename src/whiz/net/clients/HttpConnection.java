@@ -12,11 +12,13 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 import whiz.net.HttpCookies;
 import whiz.net.HttpMethod;
+import whiz.net.HttpRequestHeaders;
 import whiz.net.NetworkConnection;
 import whiz.net.interfaces.HttpConnectionInfo;
 import whiz.net.interfaces.HttpCookieHandler;
@@ -45,6 +47,7 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 	protected String _responseData;
 	protected long _responseTime;
 	protected CookieManager _cookieManager;
+	protected Map<String, String> _customRequestProperties;
 
 	protected HttpConnection(final String url, final HttpMethod method, final String data) {
 		this(HttpConnection.class, url, method, data);
@@ -63,10 +66,25 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 		_readTimeout = null;
 		_chrono = new Chronometer();
 		_cookieManager = new CookieManager();
+		_customRequestProperties = new HashMap();
 	}
 
 	protected HttpConnection(final URL url, final HttpMethod method, final String data) {
 		this(url.toString(), method, data);
+	}
+
+	public String getCustomRequestHeader(final String name) {
+		return _customRequestProperties.get(name);
+	}
+
+	public HttpConnection addCustomRequestHeader(final String name, final String value) {
+		_customRequestProperties.put(name, value);
+		return this;
+	}
+
+	public HttpConnection deleteCustomRequestHeader(final String name) {
+		_customRequestProperties.remove(name);
+		return this;
 	}
 
 	public String getUserAgent() {
@@ -178,22 +196,43 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 		return new String(_responseRawData = readResponseDataAsByteArray(), CHARSET);
 	}
 
+	private void proceed() throws IOException {
+		if (assigned(_userAgent)) {
+			_connection.setRequestProperty(HttpRequestHeaders.USER_AGENT, _userAgent);
+		}
+		if (assigned(_contentType)) {
+			_connection.setRequestProperty(HttpRequestHeaders.CONTENT_TYPE, _contentType);
+		}
+		for (final Map.Entry<String, String> n : _customRequestProperties.entrySet()) {
+			_connection.setRequestProperty(n.getKey(), n.getValue());
+		}
+		flushCookies();
+		if (!_bodyless) {
+			writeRequestData(_requestData);
+		}
+		_responseData = readResponseData();
+		extractCookies();
+	}
+
 	public final HttpConnectionInfo go() {
 		try {
 			open();
 			try {
-				if (assigned(_userAgent)) {
-					_connection.setRequestProperty("User-Agent", _userAgent);
-				}
-				if (assigned(_contentType)) {
-					_connection.setRequestProperty("Content-Type", _contentType);
-				}
-				flushCookies();
-				if (!_bodyless) {
-					writeRequestData(_requestData);
-				}
-				_responseData = readResponseData();
-				extractCookies();
+				proceed();
+			} finally {
+				close();
+			}
+		} catch (final Exception e) {
+			setLastException(e);
+		}
+		return this;
+	}
+
+	public final HttpConnectionInfo goSecure() {
+		try {
+			openSecure();
+			try {
+				proceed();
 			} finally {
 				close();
 			}

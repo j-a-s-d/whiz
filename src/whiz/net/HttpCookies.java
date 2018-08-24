@@ -12,9 +12,9 @@ import whiz.Whiz;
  */
 public class HttpCookies extends Whiz {
 
-	public static final String COOKIE_OLD_REQUEST_HEADER = "Cookie";
+	public static final String COOKIE_OLD_REQUEST_HEADER = HttpRequestHeaders.COOKIE;
 	public static final String COOKIE_NEW_REQUEST_HEADER = "Cookie2"; // NOTE: RFC 2965
-	public static final String COOKIE_OLD_RESPONSE_HEADER = "Set-Cookie";
+	public static final String COOKIE_OLD_RESPONSE_HEADER = HttpResponseHeaders.SET_COOKIE;
 	public static final String COOKIE_NEW_RESPONSE_HEADER = "Set-Cookie2"; // NOTE: RFC 2965
 
 	public static final String COOKIE_ERASE_DATE = "Thu, 01 Jan 1970 00:00:00 GMT";

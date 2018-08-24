@@ -9,6 +9,12 @@ Just another Java micro framework.
 
 ## History
 
+* 0.2.0 -- 23 Aug 2018
+    + released new binary
+    + improved whiz.net.clients.HttpConnection class
+    + added whiz.net.HttpRequestHeaders class
+    + added whiz.net.HttpResponseHeaders class
+    + configured to depend on Ace 0.5.6
 * 0.1.3 -- 12 Jul 2018
     + released new binary
     + improved whiz.net.clients.HttpConnector class
@@ -149,7 +155,7 @@ Just another Java micro framework.
 ## License
 
 Whiz
-Copyright (c) 2017 Javier Santo Domingo (j-a-s-d@coderesearchlabs.com).
+Copyright (c) 2017-2018 Javier Santo Domingo (j-a-s-d@coderesearchlabs.com).
 
 Permission is hereby granted, free of charge, to any
 person obtaining a copy of this software and associated
