@@ -9,6 +9,9 @@ Just another Java micro framework.
 
 ## History
 
+* 0.2.1 -- 12 Mar 2019
+    + released new binary
+    + improved whiz.net.servers.HttpRequest class
 * 0.2.0 -- 23 Aug 2018
     + released new binary
     + improved whiz.net.clients.HttpConnection class
@@ -155,7 +158,7 @@ Just another Java micro framework.
 ## License
 
 Whiz
-Copyright (c) 2017-2018 Javier Santo Domingo (j-a-s-d@coderesearchlabs.com).
+Copyright (c) 2017-2019 Javier Santo Domingo (j-a-s-d@coderesearchlabs.com).
 
 Permission is hereby granted, free of charge, to any
 person obtaining a copy of this software and associated

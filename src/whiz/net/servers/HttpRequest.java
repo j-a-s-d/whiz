@@ -2,11 +2,13 @@
 
 package whiz.net.servers;
 
+import ace.constants.SIZES;
 import ace.constants.STRINGS;
 import ace.containers.Lists;
 import ace.text.Strings;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,9 +28,11 @@ import whiz.net.interfaces.HttpCookieHandler;
 
 public class HttpRequest extends WhizObject implements HttpCookieHandler {
 	
-	public final byte[] EMPTY_RESPONSE = new byte[0];
+	public static int DIRECT_REPLY_MAX_SIZE = 64 * (int) SIZES.MEGABYTE;
+	public static int SEGMENTED_REPLY_BUFFER_SIZE = 64 * (int) SIZES.KILOBYTE;
+	public static int REQUEST_READ_BUFFER_SIZE = 4 * (int) SIZES.KILOBYTE;
 	
-	private static final int BUFFER_SIZE = 1024;
+	public final byte[] EMPTY_RESPONSE = new byte[0];
 	
 	private final HttpStand _stand;
 	private final HttpExchange _client;
@@ -59,7 +63,7 @@ public class HttpRequest extends WhizObject implements HttpCookieHandler {
 	public byte[] getRequestBody() throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final InputStream in = _client.getRequestBody();
-		final byte[] buf = new byte[BUFFER_SIZE];
+		final byte[] buf = new byte[REQUEST_READ_BUFFER_SIZE];
 		int read;
 		while ((read = in.read(buf)) != -1) {
 			baos.write(buf, 0, read);
@@ -71,15 +75,27 @@ public class HttpRequest extends WhizObject implements HttpCookieHandler {
 		return reply(code, EMPTY_RESPONSE);
 	}
 	
+	private void writeReplyBuffer(final OutputStream os, final byte[] buffer) throws IOException {
+		if (buffer.length > DIRECT_REPLY_MAX_SIZE) {
+			final InputStream in = new ByteArrayInputStream(buffer);
+			final byte[] b = new byte[SEGMENTED_REPLY_BUFFER_SIZE];
+			int read;
+			while ((read = in.read(b)) != -1) {
+				os.write(b, 0, read);
+			}
+		} else {
+			os.write(buffer);
+		}
+		os.close();
+	}
+	
 	public boolean reply(final int code, final byte[] buffer) {
 		try {
 			if (buffer == null) {
 				_client.sendResponseHeaders(code, -1);
 			} else {
 				_client.sendResponseHeaders(code, buffer.length);
-				final OutputStream os = _client.getResponseBody();
-				os.write(buffer);
-				os.close();
+				writeReplyBuffer(_client.getResponseBody(), buffer);
 			}
 			_replied = true;
 		} catch (final Exception e) {
