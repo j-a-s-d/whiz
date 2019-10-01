@@ -2,6 +2,9 @@
 
 package whiz.net.clients;
 
+import ace.constants.SIZES;
+import ace.containers.Lists;
+import ace.containers.Maps;
 import ace.text.Strings;
 import ace.time.Chronometer;
 import java.io.ByteArrayOutputStream;
@@ -11,8 +14,6 @@ import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
@@ -25,7 +26,7 @@ import whiz.net.interfaces.HttpCookieHandler;
 
 public abstract class HttpConnection extends NetworkConnection implements HttpConnectionInfo, HttpCookieHandler {
 
-	public static int BUFFER_SIZE = 1024 * 16;
+	public static int BUFFER_SIZE = 16 * (int) SIZES.KILOBYTE;
 	public static boolean USE_CACHE = false;
 	public static String CHARSET = "utf-8";
 	public static String CONTENT_TYPE_UTF8_TEXT = "text/plain; charset=utf-8";
@@ -47,7 +48,7 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 	protected String _responseData;
 	protected long _responseTime;
 	protected CookieManager _cookieManager;
-	protected Map<String, String> _customRequestProperties;
+	protected final Map<String, String> _customRequestProperties;
 
 	protected HttpConnection(final String url, final HttpMethod method, final String data) {
 		this(HttpConnection.class, url, method, data);
@@ -58,15 +59,16 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 		_requestURL = url;
 		_requestMethod = method;
 		_requestData = data;
-		_requestCookies = new ArrayList();
-		_responseCookies = new ArrayList();
+		_requestCookies = Lists.make();
+		_responseCookies = Lists.make();
 		_bodyless = method.is(HttpMethod.GET) || method.is(HttpMethod.HEAD);
+		_userAgent = null;
 		_contentType = null;
 		_connectTimeout = null;
 		_readTimeout = null;
 		_chrono = new Chronometer();
 		_cookieManager = new CookieManager();
-		_customRequestProperties = new HashMap();
+		_customRequestProperties = Maps.make();
 	}
 
 	protected HttpConnection(final URL url, final HttpMethod method, final String data) {
@@ -84,6 +86,11 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 
 	public HttpConnection deleteCustomRequestHeader(final String name) {
 		_customRequestProperties.remove(name);
+		return this;
+	}
+
+	public HttpConnection clearCustomRequestHeaders() {
+		_customRequestProperties.clear();
 		return this;
 	}
 
@@ -131,7 +138,7 @@ public abstract class HttpConnection extends NetworkConnection implements HttpCo
 	}
 
 	private void importCookiesFromHeader(final List<String> header) {
-		if (assigned(header) && header.size() > 0) {
+		if (Lists.hasContent(header)) {
 			for (final String item : header) {
 				for (final HttpCookie cookie : HttpCookie.parse(item)) {
 					try {

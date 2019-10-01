@@ -1,5 +1,5 @@
 # Whiz
-Just another Java micro framework.
+Not just another Java micro framework.
 
 ## Characteristics
 + works with Java 1.6 or superior
@@ -9,6 +9,10 @@ Just another Java micro framework.
 
 ## History
 
+* 0.2.2 -- 01 Oct 2019
+    + released new binary
+    + improved whiz.net.clients.HttpConnector class
+    + improved whiz.net.clients.HttpConnection class
 * 0.2.1 -- 12 Mar 2019
     + released new binary
     + improved whiz.net.servers.HttpRequest class

@@ -2,10 +2,14 @@
 
 package whiz.net.clients;
 
+import ace.constants.CHARS;
 import ace.constants.STRINGS;
 import ace.containers.Lists;
+import ace.containers.Maps;
 import java.net.HttpCookie;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import whiz.WhizObject;
 import whiz.net.HttpMethod;
 import whiz.net.HttpStatus;
@@ -14,12 +18,13 @@ import whiz.net.interfaces.HttpCookieHandler;
 
 public class HttpConnector extends WhizObject implements HttpCookieHandler {
 
-	public static final char c_SLASH = '/';
-
 	private final String _base;
 	protected List<HttpCookie> _cookies;
+	protected String _userAgent;
+	protected String _contentType;
 	protected Integer _connectTimeout;
 	protected Integer _readTimeout;
+	protected final HashMap<String, String> _customRequestProperties;
 
 	public HttpConnector() {
 		this(HttpConnector.class, STRINGS.EMPTY);
@@ -38,7 +43,7 @@ public class HttpConnector extends WhizObject implements HttpCookieHandler {
 		final int l = baseUrl.length();
 		if (l == 0) {
 			_base = null;
-		} else if (baseUrl.charAt(l - 1) != c_SLASH) {
+		} else if (baseUrl.charAt(l - 1) != CHARS.SLASH) {
 			_base = baseUrl;
 		} else {
 			_base = baseUrl.substring(0, l - 1);
@@ -46,13 +51,16 @@ public class HttpConnector extends WhizObject implements HttpCookieHandler {
 		_cookies = Lists.make();
 		_connectTimeout = null;
 		_readTimeout = null;
+		_contentType = null;
+		_userAgent = null;
+		_customRequestProperties = Maps.make();
 	}
 
 	private String formUrl(final String path) {
 		return _base == null || _base.isEmpty() ? path
 			: path == null || path.isEmpty() ? _base
-				: path.charAt(0) == c_SLASH ? _base + path
-				: _base + c_SLASH + path;
+				: path.charAt(0) == CHARS.SLASH ? _base + path
+				: _base + CHARS.SLASH + path;
 	}
 
 	private HttpConnectionInfo fire(final HttpConnection connection) {
@@ -63,6 +71,15 @@ public class HttpConnector extends WhizObject implements HttpCookieHandler {
 			}
 			if (assigned(_readTimeout)) {
 				connection.setReadTimeout(_readTimeout);
+			}
+			if (assigned(_userAgent)) {
+				connection.setUserAgent(_userAgent);
+			}
+			if (assigned(_contentType)) {
+				connection.setContentType(_contentType);
+			}
+			for (final Map.Entry<String, String> n : _customRequestProperties.entrySet()) {
+				connection.addCustomRequestHeader(n.getKey(), n.getValue());
 			}
 			connection.setCookies(_cookies);
 			_cookies.clear();
@@ -177,6 +194,38 @@ public class HttpConnector extends WhizObject implements HttpCookieHandler {
 			}
 		}
 		return null;
+	}
+
+	public String getCustomRequestHeader(final String name) {
+		return _customRequestProperties.get(name);
+	}
+
+	public void addCustomRequestHeader(final String name, final String value) {
+		_customRequestProperties.put(name, value);
+	}
+
+	public void deleteCustomRequestHeader(final String name) {
+		_customRequestProperties.remove(name);
+	}
+
+	public void clearCustomRequestHeaders() {
+		_customRequestProperties.clear();
+	}
+
+	public String getUserAgent() {
+		return _userAgent;
+	}
+
+	public void setUserAgent(final String value) {
+		_userAgent = value;
+	}
+
+	public String getContentType() {
+		return _contentType;
+	}
+
+	public void setContentType(final String value) {
+		_contentType = value;
 	}
 
 	public Integer getReadTimeout() {
