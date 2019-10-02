@@ -9,6 +9,11 @@ Not just another Java micro framework.
 
 ## History
 
+* 0.3.0 -- 02 Oct 2019
+    + released new binary
+    + added whiz.WhizApplication class
+    + configured to depend on Joda Ace 1.0.0
+    + configured to depend on JodaTime 2.10.4
 * 0.2.2 -- 01 Oct 2019
     + released new binary
     + improved whiz.net.clients.HttpConnector class
