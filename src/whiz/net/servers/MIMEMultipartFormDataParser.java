@@ -8,6 +8,9 @@ import ace.text.Strings;
 import java.util.List;
 import whiz.WhizObject;
 
+/**
+ * MIME multipart form data parser class.
+ */
 public class MIMEMultipartFormDataParser extends WhizObject {
 
 	private static final byte[] RAW_CRLF = (STRINGS.CR + STRINGS.LF).getBytes();
@@ -19,6 +22,9 @@ public class MIMEMultipartFormDataParser extends WhizObject {
 	private MIMEMultipartFormDataInfo _info;
 	private byte[] _body;
 
+	/**
+	 * Default constructor.
+	 */
 	public MIMEMultipartFormDataParser() {
 		super(MIMEMultipartFormDataParser.class);
 	}
@@ -79,6 +85,12 @@ public class MIMEMultipartFormDataParser extends WhizObject {
 		return null;
 	}
 
+	/**
+	 * Parses the specified byte array as MIME multipart form data.
+	 * 
+	 * @param body
+	 * @return the resulting MIME multipart form data information object instance
+	 */
 	public MIMEMultipartFormDataInfo parse(final byte[] body) {
 		_body = body;
 		return parseBody();

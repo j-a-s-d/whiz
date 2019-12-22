@@ -17,6 +17,12 @@ public enum HttpMethod {
 	PUT,
 	TRACE;
 
+	/**
+	 * Determines if the invoked HTTP method instance is the same of the specified instance.
+	 * 
+	 * @param method
+	 * @return <tt>true</tt> if they are the same, <tt>false</tt> otherwise
+	 */
 	public final boolean is(final HttpMethod method) {
 		return this.name().equals(method.name());
 	}

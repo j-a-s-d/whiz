@@ -9,6 +9,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import whiz.net.HttpMethod;
 
+/**
+ * Abstract HTTP rest json handler class.
+ */
 public abstract class RestJsonHandler extends RestJsonAbstractHandler {
 
 	protected JsonModel _modelGet;
@@ -16,10 +19,26 @@ public abstract class RestJsonHandler extends RestJsonAbstractHandler {
 	protected JsonModel _modelPut;
 	protected JsonModel _modelDelete;
 
+	/**
+	 * Constructor accepting a class instance, a route and a template.
+	 * 
+	 * @param clazz
+	 * @param route
+	 * @param template 
+	 */
 	public RestJsonHandler(final Class<?> clazz, final String route, final String template) {
 		this(clazz, route, template, null, null);
 	}
 
+	/**
+	 * Constructor accepting a class instance, a route, a template and adapters for reading and writing.
+	 * 
+	 * @param clazz
+	 * @param route
+	 * @param template 
+	 * @param readingAdapter 
+	 * @param writingAdapter 
+	 */
 	public RestJsonHandler(final Class<?> clazz, final String route, final String template, final Treater<byte[]> readingAdapter, final Treater<byte[]> writingAdapter) {
 		super(clazz, new HttpMethod[] { HttpMethod.POST, HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE }, route, template, readingAdapter, writingAdapter);
 		setupModels();
@@ -70,16 +89,58 @@ public abstract class RestJsonHandler extends RestJsonAbstractHandler {
 		Ace.debug("RestJsonHandler called with method: " + methodName); // NOTE: it should never happen
 	}
 
+	/**
+	 * Asks for the json model that will validate the post requests this rest handler.
+	 * 
+	 * @return the json model
+	 */
 	protected abstract JsonModel modelPost();
 
+	/**
+	 * Asks for the json model that will validate the put requests this rest handler.
+	 * 
+	 * @return the json model
+	 */
 	protected abstract JsonModel modelPut();
 
+	/**
+	 * On post event handler accepting a HTTP request, a json body object and a json parameters object.
+	 * 
+	 * @param request
+	 * @param body
+	 * @param parameters
+	 * @return the json resulting object
+	 */
 	protected abstract JsonObject onPost(final HttpRequest request, final JsonObject body, final JsonObject parameters);
 
+	/**
+	 * On get event handler accepting a HTTP request, a json body object (that should be empty) and a json parameters object.
+	 * 
+	 * @param request
+	 * @param body
+	 * @param parameters
+	 * @return the json resulting object
+	 */
 	protected abstract JsonObject onGet(final HttpRequest request, final JsonObject body, final JsonObject parameters);
 
+	/**
+	 * On put event handler accepting a HTTP request, a json body object and a json parameters object.
+	 * 
+	 * @param request
+	 * @param body
+	 * @param parameters
+	 * @return the json resulting object
+	 */
 	protected abstract JsonObject onPut(final HttpRequest request, final JsonObject body, final JsonObject parameters);
 
+	/**
+	 * On delete event handler accepting a HTTP request, a json body object (that should be empty) and a json parameters object.
+	 * 
+	 * @param request
+	 * @param body
+	 * @param parameters
+	 * @return the json resulting object
+	 */
 	protected abstract JsonObject onDelete(final HttpRequest request, final JsonObject body, final JsonObject parameters);
 
 }

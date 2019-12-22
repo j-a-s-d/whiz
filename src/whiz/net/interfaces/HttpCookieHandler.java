@@ -5,6 +5,9 @@ package whiz.net.interfaces;
 import java.net.HttpCookie;
 import java.util.List;
 
+/**
+ * Interface to be implemented by HTTP cookies handlers.
+ */
 public interface HttpCookieHandler {
 
 	void clearCookies();

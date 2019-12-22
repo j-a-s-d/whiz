@@ -9,6 +9,13 @@ Not just another Java micro framework.
 
 ## History
 
+* 0.4.0 -- 22 Dec 2019
+    + released new binary
+    + configured to depend on Ace 0.6.1
+    + configured to depend on Joda Ace 1.1.0
+    + configured to depend on Gson Ace 1.2.0
+    + configured to depend on Gson 2.8.6
+    + added methods documentation comments
 * 0.3.0 -- 02 Oct 2019
     + released new binary
     + added whiz.WhizApplication class

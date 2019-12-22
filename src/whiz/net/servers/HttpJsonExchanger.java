@@ -4,6 +4,9 @@ package whiz.net.servers;
 
 import com.google.gson.JsonElement;
 
+/**
+ * Useful HTTP json exchanger interface.
+ */
 interface HttpJsonExchanger {
 
 	JsonElement exchange(HttpRequest request, JsonElement json);

@@ -4,8 +4,11 @@ package whiz.net;
 
 import whiz.Whiz;
 
-// NOTE: built following RFC 2821
-
+/**
+ * SMTP commands constants class.
+ * 
+ * NOTE: built following RFC 2821
+ */
 public class SMTPCommands extends Whiz {
 
 	public static final String HELO = "HELO"; // Parameters: <domain>

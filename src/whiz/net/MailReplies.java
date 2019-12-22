@@ -5,6 +5,9 @@ package whiz.net;
 import ace.text.Strings;
 import whiz.Whiz;
 
+/**
+ * Base class for mail replies.
+ */
 public class MailReplies extends Whiz {
 
 	protected static final boolean isValid(final String response, final String ok) {

@@ -10,8 +10,14 @@ import java.util.List;
 import java.util.Map;
 import whiz.WhizObject;
 
+/**
+ * POP3 message parser class.
+ */
 public class POP3MessageParser extends WhizObject {
 
+	/**
+	 * Default constructor.
+	 */
 	public POP3MessageParser() {
 		super(POP3MessageParser.class);
 	}
@@ -53,6 +59,12 @@ public class POP3MessageParser extends WhizObject {
 		message.setBody(body);
 	}
 
+	/**
+	 * Parses the specified list of strings as a POP3 message instance.
+	 * 
+	 * @param rawContent
+	 * @return the resulting POP3 message instance
+	 */
 	public POP3Message parse(final List<String> rawContent) {
 		final POP3Message result = new POP3Message();
 		try {

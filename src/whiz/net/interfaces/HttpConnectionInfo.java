@@ -6,6 +6,9 @@ import ace.interfaces.ExceptionsHandler;
 import java.net.HttpCookie;
 import java.util.List;
 
+/**
+ * Interface for the HTTP connection information replies.
+ */
 public interface HttpConnectionInfo extends ExceptionsHandler {
 
 	String getRequestMethod();

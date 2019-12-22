@@ -15,6 +15,12 @@ import whiz.Whiz;
  */
 public class MACAddresses extends Whiz {
 
+	/**
+	 * Formats the specified MAC address byte array as a readable hex string.
+	 * 
+	 * @param address
+	 * @return the resulting hex string
+	 */
 	public static final String format(final byte[] address) {
 		if (address == null) {
 			return null;
@@ -26,6 +32,12 @@ public class MACAddresses extends Whiz {
 		return sb.toString();
 	}
 
+	/**
+	 * Determines if the specified MAC address is a local one.
+	 * 
+	 * @param address
+	 * @return <tt>true</tt> if the specified MAC address is a local one, <tt>false</tt> otherwise
+	 */
 	public static final boolean isLocal(final String address) {
 		try {
 			for (final Enumeration<NetworkInterface> item = NetworkInterface.getNetworkInterfaces(); item.hasMoreElements();) {
@@ -39,6 +51,11 @@ public class MACAddresses extends Whiz {
 		return false;
 	}
 
+	/**
+	 * Lists the local MAC addresses.
+	 * 
+	 * @return a list of strings with the local MAC addresses
+	 */
 	public static final List<String> list() {
 		try {
 			final List<String> result = Lists.make();

@@ -82,6 +82,12 @@ public class HttpStatus extends Whiz {
 	public static final int NETWORK_READ_TIMEOUT_ERROR = 598; // Network Read Timeout Error
 	public static final int NETWORK_CONNECT_TIMEOUT_ERROR = 599; // Network Connect Timeout Error
 
+	/**
+	 * Gets the specified HTTP status message code as string.
+	 * 
+	 * @param code
+	 * @return the resulting string
+	 */
 	public static final String getStatusMessage(final int code) {
 		switch (code) {
 			case ACCEPTED:

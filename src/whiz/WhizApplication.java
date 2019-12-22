@@ -21,6 +21,9 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
+/**
+ * Abstract whiz application class.
+ */
 public abstract class WhizApplication extends WhizObject implements Initializable, Startable, Stoppable {
 
 	private final boolean _hasArguments;
@@ -32,18 +35,46 @@ public abstract class WhizApplication extends WhizObject implements Initializabl
 	private final File _jarDirectory;
 	private final Integer _processId;
 
-	public WhizApplication(final Class<?> clazz, final String[] args) {
-		this(clazz, GUID.makeAsString(), args);
+	/**
+	 * Constructor accepting a class instance and an arguments array of strings.
+	 * 
+	 * @param clazz
+	 * @param arguments 
+	 */
+	public WhizApplication(final Class<?> clazz, final String[] arguments) {
+		this(clazz, GUID.makeAsString(), arguments);
 	}
 
-	public WhizApplication(final Class<?> clazz, final String instanceId, final String[] args) {
-		this(clazz, instanceId, Date.now(), args);
+	/**
+	 * Constructor accepting a class instance, an instance identifier and an arguments array of strings.
+	 * 
+	 * @param clazz
+	 * @param instanceId
+	 * @param arguments 
+	 */
+	public WhizApplication(final Class<?> clazz, final String instanceId, final String[] arguments) {
+		this(clazz, instanceId, Date.now(), arguments);
 	}
 
-	public WhizApplication(final Class<?> clazz, final DateTime instanceLaunchTime, final String[] args) {
-		this(clazz, GUID.makeAsString(), instanceLaunchTime, args);
+	/**
+	 * Constructor accepting a class instance, an instance launch time and an arguments array of strings.
+	 * 
+	 * @param clazz
+	 * @param instanceLaunchTime
+	 * @param arguments 
+	 */
+	public WhizApplication(final Class<?> clazz, final DateTime instanceLaunchTime, final String[] arguments) {
+		this(clazz, GUID.makeAsString(), instanceLaunchTime, arguments);
 	}
 
+	/**
+	 * Constructor accepting a class instance, an instance identifier, an instance launch time and an arguments array of strings.
+	 * 
+	 * @param clazz
+	 * @param instanceId
+	 * @param instanceLaunchTime
+	 * @param arguments 
+	 */
 	public WhizApplication(final Class<?> clazz, final String instanceId, final DateTime instanceLaunchTime, final String[] arguments) {
 		super(clazz);
 		Thread.currentThread().setName(clazz.getSimpleName());
@@ -62,42 +93,94 @@ public abstract class WhizApplication extends WhizObject implements Initializabl
 		_hasArguments = GenericArrays.hasContent(_arguments = arguments);
 	}
 
+	/**
+	 * Determines if the application received command line arguments.
+	 * 
+	 * @return <tt>true</tt> if the application received command line arguments, <tt>false</tt> otherwise
+	 */
 	public boolean hasArguments() {
 		return _hasArguments;
 	}
 
+	/**
+	 * Gets the application command line arguments string array.
+	 * 
+	 * @return the application command line arguments string array
+	 */
 	public String[] getArguments() {
 		return _arguments;
 	}
 
+	/**
+	 * Gets the application instance launch time as a date time instance.
+	 * 
+	 * @return the application instance launch time as a date time instance
+	 */
 	public DateTime getInstanceLaunchTime() {
 		return _instanceLaunchTime;
 	}
 
+	/**
+	 * Gets the application instance launch time as a date time formatted string.
+	 * 
+	 * @return the application instance launch time as a date time formatted string
+	 */
 	public String getInstanceLaunchTimeAsString() {
 		return Date.format(getInstanceLaunchTime(), Date.FORMAT_YMD_HMS_SSS);
 	}
 
+	/**
+	 * Gets the application instance up time as a date time formatted string.
+	 * 
+	 * @return the application instance up time as a date time formatted string
+	 */
 	public String getInstanceUpTimeAsString() {
 		return _periodFormatter.print(new Period(_instanceLaunchTime, Date.now()));
 	}
 
+	/**
+	 * Gets the application instance identifier.
+	 * 
+	 * @return the application instance identifier
+	 */
 	public String getInstanceId() {
 		return _instanceId;
 	}
 
+	/**
+	 * Sets the associated jar instance.
+	 * 
+	 * @param jar 
+	 */
 	public void setJar(final Jar jar) {
 		_jar = jar;
 	}
 
+	/**
+	 * Gets the associated jar instance.
+	 * 
+	 * @return the associated jar instance
+	 */
 	public Jar getJar() {
 		return _jar;
 	}
 
+	/**
+	 * Gets the associated jar instance directory.
+	 * 
+	 * @return the associated jar instance directory
+	 */
 	public File getJarDirectory() {
 		return _jarDirectory;
 	}
 
+	/**
+	 * Gets the associated jar instance directory path.
+	 * 
+	 * NOTE: while running in NetBeans IDE, it retrieves the local build path to ensure the correct behavior
+	 * 
+	 * @return the associated jar instance directory path
+	 */
 	public String getJarPath() {
 		final String p = FilenameUtils.ensureLastDirectorySeparator(_jarDirectory.getPath());
 		final String x = "build" + File.separator;
@@ -105,6 +188,11 @@ public abstract class WhizApplication extends WhizObject implements Initializabl
 		return Strings.endsWithIgnoreCase(p, x) ? Strings.dropRight(p, x.length()) : p;
 	}
 
+	/**
+	 * Gets the process identifier.
+	 * 
+	 * @return the process identifier
+	 */
 	public Integer getProcessId() {
 		return _processId;
 	}

@@ -11,7 +11,11 @@ import java.util.TreeMap;
 import whiz.net.POP3Commands;
 import whiz.net.POP3Replies;
 
-// NOTE: built following RFC 1725
+/**
+ * Useful POP3 connector class.
+ * 
+ * NOTE: built following RFC 1725
+ */
 public class POP3Connector extends MailConnection {
 
 	public static final int PORT = 110;
@@ -19,26 +23,57 @@ public class POP3Connector extends MailConnection {
 	private final POP3MessageParser _messageParser = new POP3MessageParser();
 	private String _errorMessage;
 
+	/**
+	 * Constructor accepting a host.
+	 * 
+	 * @param host
+	 */
 	public POP3Connector(final String host) {
 		super(host, PORT);
 	}
 
+	/**
+	 * Constructor accepting a host and a port.
+	 * 
+	 * @param host
+	 * @param port 
+	 */
 	public POP3Connector(final String host, final int port) {
 		super(host, port);
 	}
 
+	/**
+	 * Gets the last error message from server.
+	 * 
+	 * @return the last error message from server
+	 */
 	public final String getLastErrorMessageFromServer() {
 		return _errorMessage;
 	}
 
+	/**
+	 * Drops the last error message from server.
+	 */
 	public final void forgetLastErrorMessageFromServer() {
 		_errorMessage = null;
 	}
 
+	/**
+	 * Sends the specified command with the specified parameters to the destination.
+	 * 
+	 * @param command
+	 * @param parameters
+	 * @throws IOException 
+	 */
 	public final void send(final String command, final String parameters) throws IOException {
 		send(command + STRINGS.SPACE + parameters);
 	}
 
+	/**
+	 * Opens the connection to the destination.
+	 * 
+	 * @return <tt>true</tt> if the operation was successful, <tt>false</tt> otherwise
+	 */
 	@Override public final boolean open() {
 		boolean result = false;
 		try {
@@ -50,6 +85,11 @@ public class POP3Connector extends MailConnection {
 		return result;
 	}
 
+	/**
+	 * Closes the connection to the destination.
+	 * 
+	 * @return <tt>true</tt> if the operation was successful, <tt>false</tt> otherwise
+	 */
 	@Override public final boolean close() {
 		boolean result = false;
 		try {
@@ -66,6 +106,13 @@ public class POP3Connector extends MailConnection {
 		return result;
 	}
 
+	/**
+	 * Sends the specified credentials to the destination.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return <tt>true</tt> if the operation was successful, <tt>false</tt> otherwise
+	 */
 	public final boolean sendCredentials(final String username, final String password) {
 		boolean result = false;
 		try {
@@ -82,6 +129,11 @@ public class POP3Connector extends MailConnection {
 		return result;
 	}
 
+	/**
+	 * Gets the message count.
+	 * 
+	 * @return the message count
+	 */
 	public final int retrieveMessageCount() {
 		int result = 0;
 		try {
@@ -99,6 +151,12 @@ public class POP3Connector extends MailConnection {
 		return result;
 	}
 
+	/**
+	 * Deletes the message at the specified index.
+	 * 
+	 * @param index
+	 * @return <tt>true</tt> if the operation was successful, <tt>false</tt> otherwise
+	 */
 	public final boolean eraseMessage(final int index) {
 		boolean result = false;
 		try {
@@ -114,6 +172,13 @@ public class POP3Connector extends MailConnection {
 		return result;
 	}
 
+	/**
+	 * Gets the raw content as a list of strings using the specified timeout.
+	 * 
+	 * @param ensureDelay
+	 * @return the raw content as a list of strings
+	 * @throws IOException 
+	 */
 	private List<String> retrieveRawContent(final long ensureDelay) throws IOException {
 		final List<String> content = Lists.make();
 		boolean terminated = false;
@@ -128,6 +193,12 @@ public class POP3Connector extends MailConnection {
 		return content;
 	}
 
+	/**
+	 * Retrieves the message at the specified index using the specified timeout
+	 * @param index
+	 * @param ensureDelay
+	 * @return the resulting message
+	 */
 	public final POP3Message fetchMessage(final int index, final long ensureDelay) {
 		try {
 			send(POP3Commands.RETR, Integer.toString(index));
@@ -143,6 +214,11 @@ public class POP3Connector extends MailConnection {
 		return null;
 	}
 
+	/**
+	 * Retrieves the message list as a tree map.
+	 * 
+	 * @return the message list as a tree map
+	 */
 	public final TreeMap<Integer, Integer> getMessageList() {
 		final TreeMap<Integer, Integer> result = Maps.makeTree();
 		try {

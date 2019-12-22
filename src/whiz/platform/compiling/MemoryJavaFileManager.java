@@ -14,7 +14,7 @@ import javax.tools.StandardJavaFileManager;
 final class MemoryJavaFileManager extends ForwardingJavaFileManager<StandardJavaFileManager> {
 	
 	private final Map<String, MemoryFileObject> _classFilesMap;
-	
+
 	protected MemoryJavaFileManager(final StandardJavaFileManager fileManager) {
 		super(fileManager);
 		_classFilesMap = Maps.make();

@@ -52,10 +52,32 @@ import whiz.net.HttpMethod;
 
 	abstract JsonModel getModel(final HttpRequest request);
 
+	/**
+	 * On bad message field event handler accepting a HTTP request, a json body element and a field name.
+	 * 
+	 * @param request
+	 * @param body
+	 * @param field
+	 * @return the resulting json reply element
+	 */
 	protected abstract JsonElement onBadMessageField(final HttpRequest request, final JsonElement body, final String field);
 
+	/**
+	 * On bad message event handler accepting a HTTP request and a json body element.
+	 * 
+	 * @param request
+	 * @param body
+	 * @return the resulting json reply element
+	 */
 	protected abstract JsonElement onBadMessage(final HttpRequest request, final JsonElement body);
 
+	/**
+	 * On bad url event handler accepting a HTTP request and a path.
+	 * 
+	 * @param request
+	 * @param path
+	 * @return the resulting json reply element
+	 */
 	protected abstract JsonElement onBadUrl(final HttpRequest request, final String path);
 
 }

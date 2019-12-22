@@ -4,6 +4,9 @@ package whiz.net;
 
 import whiz.Whiz;
 
+/**
+ * Mail headers constants class.
+ */
 public class MailHeaders extends Whiz {
 
 	public static final String FROM = "From";

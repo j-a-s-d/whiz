@@ -29,15 +29,28 @@ public class ClassCompiler extends WhizObject {
 	private ClassLoader _classLoader;
 	private String _compilerErrorOutput;
 
+	/**
+	 * Default constructor.
+	 */
 	public ClassCompiler() {
 		super(ClassCompiler.class);
 		_classLoader = ClassCompiler.class.getClassLoader();
 	}
 
+	/**
+	 * Gets the internal class loader instance.
+	 * 
+	 * @return the internal class loader instance
+	 */
 	public ClassLoader getClassLoader() {
 		return _classLoader;
 	}
 
+	/**
+	 * Sets the internal class loader instance.
+	 * 
+	 * @param classLoader
+	 */
 	public void setClassLoader(final ClassLoader classLoader) {
 		_classLoader = classLoader;
 	}
@@ -71,6 +84,15 @@ public class ClassCompiler extends WhizObject {
 		};
 	}
 
+	/**
+	 * Compiles the specified java source code with the specified canonical class name.
+	 * 
+	 * NOTE: the compiled class is loaded via the internal class loader.
+	 * 
+	 * @param sourceCode
+	 * @param canonicalClassName
+	 * @return the compiled class instance
+	 */
 	public Class<?> compile(final String sourceCode, final String canonicalClassName) {
 		Class<?> result = null;
 		if (JDK.isAvailable()) {
@@ -110,10 +132,20 @@ public class ClassCompiler extends WhizObject {
 		}};
 	}
 
+	/**
+	 * Determines if there was a compiler error.
+	 * 
+	 * @return <tt>true</tt> if there was a compiler error, <tt>false</tt> otherwise
+	 */
 	public boolean hasCompilerErrorOutput() {
 		return assigned(_compilerErrorOutput);
 	}
 
+	/**
+	 * The compiler error output.
+	 * 
+	 * @return the compiler error output
+	 */
 	public String getCompilerErrorOutput() {
 		return _compilerErrorOutput;
 	}

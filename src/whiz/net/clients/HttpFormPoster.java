@@ -22,14 +22,24 @@ import whiz.net.NetworkConnection;
 import whiz.net.URISchemes;
 import whiz.net.interfaces.HttpConnectionInfo;
 
+/**
+ * Useful HTTP form poster class.
+ */
 public class HttpFormPoster extends NetworkConnection implements HttpConnectionInfo {
-	
+
+	/**
+	 * The character set used for the form post.
+	 */
 	public static String CHARSET = "utf-8";
+
+	/**
+	 * The buffer size used for the form post.
+	 */
 	public static int BUFFER_SIZE = 4096;
-	
+
 	private static final String BOUNDARY_BEGIN = "------";
 	private static final String BOUNDARY_END = "--";
-	
+
 	protected final String _boundaryId;
 	protected String _userAgent;
 	protected String _contentType;
@@ -43,6 +53,11 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 	protected String _responseData;
 	protected long _responseTime;
 
+	/**
+	 * Constructor accepting the destination URL as a string.
+	 * 
+	 * @param requestURL 
+	 */
 	public HttpFormPoster(final String requestURL) {
 		super(HttpFormPoster.class);
 		_userAgent = STRINGS.EMPTY;
@@ -52,7 +67,10 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 		_requestMethod = HttpMethod.POST;
 		_chrono = new Chronometer();
 	}
-	
+
+	/**
+	 * Opens the connection to the destination in a silent mode (catching exceptions).
+	 */
 	public void open() {
 		try {
 			final URL requestURL = new URL(_requestURL);
@@ -76,15 +94,27 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 			setLastException(e);
 		}
 	}
-	
+
 	private void writeLine(final String line) {
 		_writer.append(line).append(STRINGS.CR + STRINGS.LF);
 	}
-	
+
+	/**
+	 * Adds the specified request header with the specified value to the form post.
+	 * 
+	 * @param name
+	 * @param value 
+	 */
 	public void addHeader(final String name, final String value) {
 		writeLine(name + ": " + value);
 	}
-	
+
+	/**
+	 * Adds the specified field with the specified value to the form post.
+	 * 
+	 * @param fieldName
+	 * @param fieldValue 
+	 */
 	public void addFieldPart(final String fieldName, final String fieldValue) {
 		writeLine(BOUNDARY_BEGIN + _boundaryId);
 		writeLine("Content-Disposition: form-data; name=\"" + fieldName + "\"");
@@ -93,7 +123,13 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 		writeLine(fieldValue);
 		_writer.flush();
 	}
-	
+
+	/**
+	 * Adds the specified field with the specified file to the form post.
+	 * 
+	 * @param fieldName
+	 * @param uploadFile
+	 */
 	public void addFilePart(final String fieldName, final File uploadFile) {
 		final String fileName = uploadFile.getName();
 		writeLine(BOUNDARY_BEGIN + _boundaryId);
@@ -102,7 +138,6 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 		writeLine("Content-Transfer-Encoding: binary");
 		writeLine(STRINGS.EMPTY);
 		_writer.flush();
-		
 		try {
 			final FileInputStream inputStream = new FileInputStream(uploadFile);
 			final byte[] buffer = new byte[BUFFER_SIZE];
@@ -117,7 +152,7 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 		}
 		_writer.flush();
 	}
-	
+
 	private void readResponse() {
 		try {
 			_responseCode = _connection.getResponseCode();
@@ -136,7 +171,12 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 			setLastException(e);
 		}
 	}
-	
+
+	/**
+	 * Closes the connection to the destination.
+	 * 
+	 * @return the resulting HTTP connection info
+	 */
 	public HttpConnectionInfo close() {
 		writeLine(STRINGS.EMPTY);
 		writeLine(BOUNDARY_BEGIN + _boundaryId + BOUNDARY_END);
@@ -146,37 +186,77 @@ public class HttpFormPoster extends NetworkConnection implements HttpConnectionI
 		_responseTime = _chrono.stop();
 		return this;
 	}
-	
+
+	/**
+	 * Gets the request method.
+	 * 
+	 * @return the request method
+	 */
 	@Override public String getRequestMethod() {
 		return _requestMethod.name();
 	}
-	
+
+	/**
+	 * Gets the request URL string.
+	 * 
+	 * @return the request URL string
+	 */
 	@Override public String getRequestURL() {
 		return _requestURL;
 	}
-	
+
+	/**
+	 * Gets the response code.
+	 * 
+	 * @return the response code
+	 */
 	@Override public int getResponseCode() {
 		return _responseCode;
 	}
-	
+
+	/**
+	 * Gets the response data.
+	 * 
+	 * @return the response data
+	 */
 	@Override public String getResponseData() {
 		return _responseData;
 	}
-	
+
+	/**
+	 * Gets the response time.
+	 * 
+	 * @return the response time
+	 */
 	@Override public long getResponseTime() {
 		return _responseTime;
 	}
-	
+
 	// NOTE: the following methods return null due to the class nature
-	
+
+	/**
+	 * Gets the request data.
+	 * 
+	 * @return the request data
+	 */
 	@Override public String getRequestData() {
 		return null;
 	}
-	
+
+	/**
+	 * Gets the request cookie list.
+	 * 
+	 * @return the request cookie list
+	 */
 	@Override public List<HttpCookie> getRequestCookies() {
 		return null;
 	}
-	
+
+	/**
+	 * Gets the response cookie list.
+	 * 
+	 * @return the response cookie list
+	 */
 	@Override public List<HttpCookie> getResponseCookies() {
 		return null;
 	}

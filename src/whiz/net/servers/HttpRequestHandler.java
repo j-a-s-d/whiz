@@ -14,6 +14,9 @@ import java.util.Set;
 import whiz.WhizObject;
 import whiz.net.HttpMethod;
 
+/**
+ * Abstract HTTP request handler class.
+ */
 public abstract class HttpRequestHandler extends WhizObject implements HttpHandler {
 
 	private HttpStand _stand;
@@ -39,14 +42,30 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 		_writingAdapter = writingAdapter;
 	}
 
+	/**
+	 * Gets the array of HTTP methods of the handler.
+	 * 
+	 * @return the array of HTTP methods of the handler
+	 */
 	public HttpMethod[] getMethods() {
 		return _methods;
 	}
 
+	/**
+	 * Gets the route of the handler.
+	 * 
+	 * @return the route of the handler
+	 */
 	public String getRoute() {
 		return _route;
 	}
 
+	/**
+	 * Gets the HTTP stand.
+	 * 
+	 * @param <T>
+	 * @return the HTTP stand
+	 */
 	public <T extends HttpStand> T getStand() {
 		return (T) _stand;
 	}
@@ -73,12 +92,26 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 		return request;
 	}
 
+	/**
+	 * Before request handling event.
+	 * 
+	 * NOTE: override this method in subclasses to handle the event
+	 * 
+	 * @param request 
+	 */
 	protected void beforeRequestHandling(final HttpRequest request) {
-		// NOTE: override this method in subclasses
+		//
 	}
 
+	/**
+	 * After request handling event.
+	 * 
+	 * NOTE: override this method in subclasses to handle the event
+	 * 
+	 * @param request 
+	 */
 	protected void afterRequestHandling(final HttpRequest request) {
-		// NOTE: override this method in subclasses
+		//
 	}
 
 	@Override public void handle(final HttpExchange client) throws IOException {
@@ -136,8 +169,21 @@ public abstract class HttpRequestHandler extends WhizObject implements HttpHandl
 		afterRequestHandling(request);
 	}
 
+	/**
+	 * On wrong method event handler accepting the HTTP request and the method name.
+	 * 
+	 * @param request
+	 * @param methodName 
+	 */
 	protected abstract void onWrongMethod(final HttpRequest request, final String methodName);
 
+	/**
+	 * On client exception event handler accepting the HTTP request, the exception thrown, and the request body byte array.
+	 * 
+	 * @param request
+	 * @param e
+	 * @param body 
+	 */
 	protected abstract void onClientException(final HttpRequest request, final Throwable e, final byte[] body);
 
 	protected abstract byte[] process(final HttpRequest request, final byte[] body) throws Throwable;

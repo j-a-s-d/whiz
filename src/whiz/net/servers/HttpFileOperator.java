@@ -2,6 +2,9 @@
 
 package whiz.net.servers;
 
+/**
+ * Useful HTTP file operator interface.
+ */
 interface HttpFileOperator {
 
 	boolean validate(HttpRequest request, String fileName);

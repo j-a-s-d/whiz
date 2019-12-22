@@ -12,7 +12,16 @@ import whiz.Whiz;
 public class Java extends Whiz {
 
 	// INSTANCES
-	// NOTE: the following method does not call the constructor of the instance created
+
+	/**
+	 * Allocates in memory an instance of the specified class.
+	 * 
+	 * NOTE: it does not call the constructor of the instance created.
+	 * 
+	 * @param <T>
+	 * @param type
+	 * @return the allocated instance
+	 */
 	public static final <T> T allocateInstance(final Class<?> type) {
 		try {
 			return (T) Unsafe.get().allocateInstance(type);
@@ -22,6 +31,12 @@ public class Java extends Whiz {
 		}
 	}
 
+	/**
+	 * Gets the memory size of an instance of the specified class.
+	 * 
+	 * @param clazz
+	 * @return the memory size of an instance of the specified class
+	 */
 	public static final long sizeOfInstance(final Class<?> clazz) {
 		Class<?> k = clazz;
 		long maximumOffset = 0;
@@ -36,24 +51,57 @@ public class Java extends Whiz {
 	}
 
 	// MONITORS
+
+	/**
+	 * Enters in a monitor lock for the specified object.
+	 * 
+	 * NOTE: this will work up to Java 8.
+	 * 
+	 * @param o 
+	 */
 	public static final void monitorLock(final Object o) {
 		Unsafe.get().monitorEnter(o);
 	}
 
+	/**
+	 * Exists from a monitor lock for the specified object.
+	 * 
+	 * NOTE: this will work up to Java 8.
+	 * 
+	 * @param o 
+	 */
 	public static final void monitorUnlock(final Object o) {
 		Unsafe.get().monitorExit(o);
 	}
 
 	// THREADS
+
+	/**
+	 * Parks the current thread.
+	 * 
+	 * @param isAbsolute
+	 * @param time 
+	 */
 	public static final void parkCurrentThread(final boolean isAbsolute, final long time) {
 		Unsafe.get().park(isAbsolute, time);
 	}
 
+	/**
+	 * Unparks the specified thread.
+	 * 
+	 * @param thread 
+	 */
 	public static final void unparkThread(final Thread thread) {
 		Unsafe.get().unpark(thread);
 	}
 
 	// EXCEPTIONS
+
+	/**
+	 * Throws the specified exception.
+	 * 
+	 * @param throwable 
+	 */
 	public static final void throwException(final Throwable throwable) {
 		Unsafe.get().throwException(throwable);
 	}

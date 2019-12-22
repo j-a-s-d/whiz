@@ -47,10 +47,18 @@ abstract class TcpAbstractHandler extends WhizObject implements Runnable {
 		return null;
 	}
 
+	/**
+	 * Gets the connection socket.
+	 * 
+	 * @return the connection socket
+	 */
 	public Socket getSocket() {
 		return _socket;
 	}
 
+	/**
+	 * Closes the connection.
+	 */
 	public final void close() {
 		try {
 			_socket.close();
@@ -71,6 +79,11 @@ abstract class TcpAbstractHandler extends WhizObject implements Runnable {
 		return isReadable() && _inputStream.available() > 0;
 	}
 
+	/**
+	 * Determines if there is data to be read in the connection.
+	 * 
+	 * @return <tt>true</tt> if there is data to be read in the connection, <tt>false</tt> otherwise
+	 */
 	public final boolean hasDataToReceive() {
 		try {
 			return hasDataAvailable();
@@ -80,6 +93,11 @@ abstract class TcpAbstractHandler extends WhizObject implements Runnable {
 		}
 	}
 
+	/**
+	 * Determines if there is data to be read in the connection after waiting the specified amount of time.
+	 * 
+	 * @return <tt>true</tt> if there is data to be read in the connection after waiting the specified amount of time, <tt>false</tt> otherwise
+	 */
 	public boolean hasDataToReceiveAfterWait(final long ensureDelay) {
 		return Boolean.TRUE.equals(Threads.delayedSandboxedEvaluation(ensureDelay, Boolean.FALSE, new Evaluable() {
 			@Override public Boolean evaluate(final Object... parameters) throws Exception {

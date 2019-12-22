@@ -15,11 +15,30 @@ import whiz.Whiz;
  */
 public class SSLContexts extends Whiz {
 
+	/**
+	 * Makes a TLS context instance with the specified key store filename and using the specified password.
+	 * 
+	 * @param keystoreFilename
+	 * @param password
+	 * @return the created instance
+	 */
 	public static SSLContext makeTLSContext(final String keystoreFilename, final String password) {
 		return makeTLSContext(keystoreFilename, password, null, null, null);
 	}
 
-	// sample usage: makeTLSContext("./my.keystore", "mypass", "JKS", "SunX509", "SunX509");
+	/**
+	 * Makes a TLS context instance with the specified key store filename and using the specified password,
+	 * the specified type, the specified key manager algorithm and the specified trust manager algorithm.
+	 * 
+	 * Sample usage: makeTLSContext("./my.keystore", "mypass", "JKS", "SunX509", "SunX509");
+	 * 
+	 * @param keystoreFilename
+	 * @param password
+	 * @param keystoreType
+	 * @param keymanagerAlgorithm
+	 * @param trustmanagerAlgorithm
+	 * @return the created instance
+	 */
 	public static SSLContext makeTLSContext(final String keystoreFilename, final String password, final String keystoreType, final String keymanagerAlgorithm, final String trustmanagerAlgorithm) {
 		try {
 			final char[] passphrase = password.toCharArray();

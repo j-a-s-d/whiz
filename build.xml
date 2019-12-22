@@ -70,4 +70,22 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-compile">
+        <javadoc 
+            sourcepath="src"
+            defaultexcludes="yes"
+            destdir="javadocs"
+            author="true"
+            version="true"
+            use="true"
+            windowtitle="Whiz"
+        >
+            <doctitle><![CDATA[<h1>Ace</h1>]]></doctitle>
+            <bottom><![CDATA[<i>Copyright &#169; 2019 Code Research Laboratories. All Rights Reserved.</i>]]></bottom>
+            <tag name="todo" scope="all" description="TODO:"/>
+            <link offline="true" href="http://docs.oracle.com/javase/8/docs/api/" packagelistLoc="/tmp"/>
+            <link href="http://docs.oracle.com/javase/8/docs/api/"/>                
+        </javadoc>
+        <copydir src="javadocs" dest="${build.classes.dir}/javadocs"/>
+    </target>
 </project>

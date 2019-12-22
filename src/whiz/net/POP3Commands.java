@@ -2,7 +2,11 @@
 
 package whiz.net;
 
-// NOTE: built following RFC 1725
+/**
+ * SMTP commands constants class.
+ * 
+ * NOTE: built following RFC 1725
+ */
 public class POP3Commands {
 
 	// valid in the AUTHORIZATION & UPDATE states

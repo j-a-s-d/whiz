@@ -11,6 +11,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+/**
+ * Useful TCP connection class.
+ */
 public class TcpConnection extends NetworkClient {
 
 	private int _port;
@@ -21,6 +24,12 @@ public class TcpConnection extends NetworkClient {
 	protected InputStreamReader _reader;
 	protected OutputStreamWriter _writer;
 
+	/**
+	 * Constructor accepting a host and a port.
+	 * 
+	 * @param host
+	 * @param port 
+	 */
 	public TcpConnection(final String host, final int port) {
 		super(TcpConnection.class);
 		_host = host;
@@ -37,38 +46,84 @@ public class TcpConnection extends NetworkClient {
 		_socket.close();
 	}
 
+	/**
+	 * Gets the connection destination host.
+	 * 
+	 * @return the connection destination host
+	 */
 	public final String getHost() {
 		return _host;
 	}
 
+	/**
+	 * Sets the connection destination host.
+	 * 
+	 * @param host 
+	 */
 	public final void setHost(final String host) {
 		_host = host;
 	}
 
+	/**
+	 * Gets the connection destination port.
+	 * 
+	 * @return the connection destination port
+	 */
 	public final int getPort() {
 		return _port;
 	}
 
+	/**
+	 * Sets the connection destination port.
+	 * 
+	 * @param port 
+	 */
 	public final void setPort(final int port) {
 		_port = port;
 	}
 
+	/**
+	 * Gets the connection socket.
+	 * 
+	 * @return the connection socket
+	 */
 	public final Socket getSocket() {
 		return _socket;
 	}
 
+	/**
+	 * Gets the connection socket reader.
+	 * 
+	 * @return the connection socket reader
+	 */
 	public final InputStreamReader getReader() {
 		return _reader;
 	}
 
+	/**
+	 * Gets the connection socket writer.
+	 * 
+	 * @return the connection socket writer
+	 */
 	public final OutputStreamWriter getWriter() {
 		return _writer;
 	}
 
+	/**
+	 * Determines if the connection has data available to be read.
+	 * 
+	 * @return <tt>true</tt> if the connection has data available to be read, <tt>false</tt> if not
+	 * @throws IOException 
+	 */
 	public final boolean hasDataAvailable() throws IOException {
 		return _socket.getInputStream().available() > 0;
 	}
 
+	/**
+	 * Determines in a silent mode (catching exceptions) if the connection has data available to be read.
+	 * 
+	 * @return <tt>true</tt> if the connection has data available to be read, <tt>false</tt> otherwise
+	 */
 	public final boolean hasDataToReceive() {
 		try {
 			return _socket.getInputStream().available() > 0;
@@ -78,6 +133,12 @@ public class TcpConnection extends NetworkClient {
 		}
 	}
 
+	/**
+	 * Determines in a silent mode (catching exceptions) if the connection has data available to be read after waiting the specified delay time.
+	 * 
+	 * @param ensureDelay
+	 * @return <tt>true</tt> if the connection has data available to be read, <tt>false</tt> otherwise
+	 */
 	public boolean hasDataToReceiveAfterWait(final long ensureDelay) {
 		return Boolean.TRUE.equals(Threads.delayedSandboxedEvaluation(ensureDelay, Boolean.FALSE, new Evaluable() {
 			@Override public Boolean evaluate(final Object... parameters) throws Exception {
