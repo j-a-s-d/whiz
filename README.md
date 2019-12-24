@@ -9,7 +9,7 @@ Not just another Java micro framework.
 
 ## History
 
-* 0.5.0 -- 22 Dec 2019
+* 0.5.0 -- 24 Dec 2019
     + released new binaries
     + added sources and javadoc packages generation
     + configured to depend on Ace 0.7.0
