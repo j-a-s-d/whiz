@@ -9,6 +9,12 @@ Not just another Java micro framework.
 
 ## History
 
+* 0.5.0 -- 22 Dec 2019
+    + released new binaries
+    + added sources and javadoc packages generation
+    + configured to depend on Ace 0.7.0
+    + configured to depend on Joda Ace 1.2.0
+    + configured to depend on Gson Ace 1.3.0
 * 0.4.0 -- 22 Dec 2019
     + released new binary
     + configured to depend on Ace 0.6.1
