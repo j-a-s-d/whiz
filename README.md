@@ -9,6 +9,12 @@ Not just another Java micro framework.
 
 ## History
 
+* 0.6.0 -- 22 Jan 2020
+    + released new binaries
+    + added HttpHostDemo example
+    + added whiz.net.HttpMethods class
+    + added whiz.net.MIMETypes class
+    + added whiz.net.servers.DefaultStaticFileServingHandler class
 * 0.5.0 -- 24 Dec 2019
     + released new binaries
     + added sources and javadoc packages generation
