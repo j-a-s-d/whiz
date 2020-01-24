@@ -53,6 +53,22 @@ public class TcpConnector extends TcpConnection {
 	}
 
 	/**
+	 * Tries to open the connection to the destination accepting a timeout for the socket connect and read operations.
+	 * 
+	 * @param timeout
+	 * @return <tt>true</tt> if the attempt was successful, <tt>false</tt> otherwise
+	 */
+	public final boolean open(final int timeout) {
+		try {
+			connect(timeout);
+			return getSocket().isConnected() && assigned(getReader()) && assigned(getWriter());
+		} catch (final Exception e) {
+			setLastException(e);
+			return false;
+		}
+	}
+
+	/**
 	 * Tries to close the connection to the destination.
 	 * 
 	 * @return <tt>true</tt> if the attempt was successful, <tt>false</tt> otherwise

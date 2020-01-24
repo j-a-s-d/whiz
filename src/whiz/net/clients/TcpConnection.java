@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /**
@@ -38,6 +39,14 @@ public class TcpConnection extends NetworkClient {
 
 	protected final void connect() throws IOException {
 		_socket = new Socket(_host, _port);
+		_reader = new InputStreamReader(_inputStream = _socket.getInputStream());
+		_writer = new OutputStreamWriter(_outputStream = _socket.getOutputStream());
+	}
+
+	protected final void connect(final int timeout) throws IOException {
+		_socket = new Socket();
+		_socket.connect(new InetSocketAddress(_host, _port), timeout);
+		_socket.setSoTimeout(timeout);
 		_reader = new InputStreamReader(_inputStream = _socket.getInputStream());
 		_writer = new OutputStreamWriter(_outputStream = _socket.getOutputStream());
 	}

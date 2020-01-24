@@ -9,6 +9,10 @@ Not just another Java micro framework.
 
 ## History
 
+* 0.7.0 -- 23 Jan 2020
+    + released new binaries
+    + improved whiz.net.clients.TcpConnector class
+    + improved whiz.net.clients.TcpConnection class
 * 0.6.0 -- 22 Jan 2020
     + released new binaries
     + added HttpHostDemo example
