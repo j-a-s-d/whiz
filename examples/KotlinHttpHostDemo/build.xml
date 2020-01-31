@@ -1,0 +1,30 @@
+<project name="Build KotlinHttpHostDemo" default="build">
+	<typedef resource="org/jetbrains/kotlin/ant/antlib.xml" classpath="${kotlin.lib}/kotlin-ant.jar"/>
+	<property name="output" value="${basedir}/dist"/>
+	<property name="jar" value="${output}/KotlinHttpHostDemo.jar"/>
+	<target name="build">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${output}" includes="**/*"/>
+		</delete>
+		<mkdir dir="${output}"/>
+		<copy todir="${output}/lib">
+			<fileset dir="lib"/>
+		</copy>
+		<copy todir="${output}/client">
+			<fileset dir="client"/>
+		</copy>
+		<path id="cp">
+			<path path="lib/ace-0.7.0.jar" />
+			<path path="lib/whiz-0.7.0.jar" />
+		</path>
+		<kotlinc output="${jar}" classpathref="cp">
+			<src path="src"/>
+		</kotlinc>
+		<jar update="true" file="${jar}">
+			<manifest>
+				<attribute name="Class-Path" value="lib/ace-0.7.0.jar lib/whiz-0.7.0.jar"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
+

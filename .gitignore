@@ -2,7 +2,7 @@
 /build/
 /dist/
 /lib/
-/examples/HttpHostDemo/nbproject/private/
-/examples/HttpHostDemo/build/
-/examples/HttpHostDemo/dist/
-/examples/HttpHostDemo/lib/
+/examples/*/nbproject/private/
+/examples/*/build/
+/examples/*/dist/
+/examples/*/lib/
