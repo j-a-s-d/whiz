@@ -9,6 +9,9 @@ Not just another Java micro framework.
 
 ## History
 
+* 0.7.1 -- 17 Aug 2022
+    + released new binaries
+    + configured to depend on Ace 0.7.1
 * 0.7.0 -- 23 Jan 2020
     + released new binaries
     + improved whiz.net.clients.TcpConnector class
